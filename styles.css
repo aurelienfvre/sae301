@@ -5,8 +5,7 @@
 }
 
 .layout {
-    display: flex; /* Active Flexbox pour le layout principal */
-   
+    display: flex;
 }
 
 .sidebar {
@@ -18,7 +17,7 @@
     padding: 1em;
     border: 1px solid #0068FF;
     border-radius: 30px;
-    height: 40rem;
+    height: 40.4rem;
 }
 
 .sidebar-nav {
@@ -161,13 +160,14 @@ margin-right: 10px;
 /* Ajoutez ceci à votre fichier CSS existant */
 
 .main-content {
-    margin-left: 20px; /* ou la largeur de votre sidebar */
-    padding: 20px;
+    margin: 0 20px 0 20px; /* ou la largeur de votre sidebar */
+    padding: 15px;
     background-color: #F3F6FF;
     border-radius: 30px;
     width: 52rem;
     max-height: 40rem;
     overflow-y: hidden;
+
     
 }
 
@@ -247,10 +247,12 @@ margin-right: 10px;
     grid-template-columns: repeat(auto-fill, minmax(185px, 1fr)); /* Ajustez la taille de la carte */
     grid-gap: 20px;
     overflow-y: auto; /* Permet le défilement */
-    max-height: 500px; /* Hauteur maximale avant le défilement */
+    max-height: 340px; /* Hauteur maximale avant le défilement */
     padding: 20px; /* Espace autour des cartes */
-    grid-auto-rows: 330px;
+    grid-auto-rows: 345px;
+    margin-bottom: 50px; 
 }
+
 
 .card-container::-webkit-scrollbar {
     display: none; /* Cache les barres de défilement sur Webkit/Safari/Chrome */
@@ -280,28 +282,35 @@ margin-right: 10px;
     font-size: 13px;
 }
 .card-title{
-    border: 1px solid #24243A;
-    border-radius: 20px;
     padding: 7px;
     display: flex;
-    justify-content: center;
     align-items: center;
-    margin: 10px 0;
-    width: 122px;
-    font-size: 12px;
-    font-weight: 400;
+    font-size: 16px;
+    font-weight: 600;
+}
+.matiere{
+    border: 1px solid #EAC917;
 }
 .card-details{
-    font-size: 14px;
-    margin: 30px 0 50px;
+    font-size: 12px;
+    margin: 0 0 15px 0;
+    
+}
+.details{
+    font-size: 14px !important;
+}
+.additional-content p {
+    font-size: 10px;
+}
+.send{
+    margin: 2px;
 }
 
-.show-more {
-    grid-column: 1 / -1; /* La flèche s'étend sur toutes les colonnes */
-    text-align: center; /* Centre la flèche horizontalement */
-    padding: 20px;
-    cursor: pointer; /* Change le curseur lors du survol */
+.email-address {
+    font-weight: bold; /* Mettre l'adresse e-mail en gras */
+    margin: 0 0 15px 0;
 }
+
 .checkbox-container {
     position: absolute;
     top: 10px; /* Ajustez selon la marge souhaitée du haut de la carte */
@@ -309,6 +318,135 @@ margin-right: 10px;
     padding: 5px; /* Espace autour de la case à cocher */
 }
 
+.title-filter{
+    padding: 0 20px 0 20px;
+    font-weight: 500;
+    font-size: 21px;
+    color: #A2A9C8;
+    margin: 0;
+}
+/* Container pour les dropdowns et les tags des filtres */
+.dropdown-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 20px;
+}
+
+/* Style pour les boutons dropdown */
+.dropbtn {
+    background-color: #fff;
+    color: black;
+    padding: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Assure une répartition de l'espace */
+    border-radius: 8px;
+    border: none;
+}
+
+/* SVG styling via a background-image */
+.dropdown-clear {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    background: url('data:image/svg+xml;utf8,<svg width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1.00006L8 8.00006" stroke="%230068FF" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 8L8 0.999996" stroke="%230068FF" stroke-linecap="round" stroke-linejoin="round"/></svg>') no-repeat center;
+    background-size: contain;
+    cursor: pointer;
+    margin-right: 10px; /* Espace entre la croix et le texte */
+}
+.dropdown-arrow {
+    display: inline-block;
+    width: 10px;
+    height: 6px;
+    background: url('data:image/svg+xml;utf8,<svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 1L5 5L1 1" stroke="%230068FF" stroke-linecap="round" stroke-linejoin="round"/></svg>') no-repeat center;
+    background-size: contain;
+    cursor: pointer;
+    margin-left: 10px; /* Espace entre le texte et la flèche */
+}
+  
+  /* Ensure that clicking the clear span doesn't trigger the dropdown */
+  .dropbtn:hover .dropdown-clear {
+    display: inline-block;
+  }
+  
+  /* The rest of the CSS remains unchanged */
+  
+
+/* Container pour le contenu des dropdowns */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+
+/* Afficher le contenu dropdown au clic */
+.dropdown-content.show {
+    display: block;
+}
+
+/* Style pour les checkboxes à l'intérieur des dropdowns */
+.dropdown-content label {
+    display: block;
+    cursor: pointer;
+}
+
+.clear-icon {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    margin-right: 5px; /* Ajuster l'espacement si nécessaire */
+    background: url('data:image/svg+xml;utf8,<svg width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1.00006L8 8.00006" stroke="%2324243A" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 8L8 0.999996" stroke="%2324243A" stroke-linecap="round" stroke-linejoin="round"/></svg>') no-repeat center;
+    background-size: contain;
+  }
+/* Bouton pour effacer les filtres */
+.clear-filters {
+    /* padding: 6px 20px; */
+    background-color: #f3f6ff;
+    color: #24243A;
+    border: none;
+    cursor: pointer;
+}
+
+/* Container pour les tags des filtres sélectionnés */
+.selected-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 10px 0;
+
+}
+.dropdown-count {
+    margin: 0 5px; /* Ajustez l'espacement selon vos besoins */
+    background-color: #F2F2F3;
+    color: #A2A9C8;
+    border-radius: 35%;
+    padding: 2px 5px;
+  }
+
+/* Style pour les tags des filtres */
+.filter-tag {
+    padding: 5px 10px;
+    background-color: #e6e6e6;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Bouton pour retirer un tag de filtre */
+.remove-tag {
+    cursor: pointer;
+    color: #999;
+    margin-left: 8px;
+}
+
+  
 
 
 .card-checkbox {
@@ -359,9 +497,10 @@ margin-right: 10px;
 .card-reminder svg {
     margin-right: 8px; /* Ajoute de l'espace entre le SVG et le texte */
 }
+
 .card-action{
     background-color: #8DD384;
-    padding: 8px 72px;
+    padding: 8px 35px;
     color: #fff;
     border-radius: 10px;
     text-decoration: none;
@@ -377,14 +516,93 @@ margin-right: 10px;
     text-decoration: none;
     font-size: 13px;
     color: #A2A9C8;
+    border: 1px solid #F3F6FF;
 }
 .card-reminder:hover{
     background-color: #f3f6ffd9;
+    border: 1px solid #f3f6ffd9;
 }
 
 
-/* Vous devrez ajuster les couleurs et les styles pour correspondre exactement à votre design. */
 
+
+
+/* Vous devrez ajuster les couleurs et les styles pour correspondre exactement à votre design. */
+.calendar-container {
+    text-align: left; /* Alignement à gauche */
+    background: #F3F6FF;
+    border-radius: 10px;
+    padding: 25px; /* Padding réduit */
+    font-size: 11px; /* Taille de police réduite */
+    width: max-content;
+    max-width: 100%; /* S'assure que le calendrier ne dépasse pas la largeur de la barre latérale */
+  }
+  .current-date-display, .month-display {
+    text-align: left; /* Alignement à gauche */
+  }
+  .current-date-display {
+    color: #0068FF;
+    border-radius: 20px;
+    font-size: 0.9rem; /* Taille de police réduite */
+    display: inline-block;
+    font-weight: bold;
+    margin: 0 0 0 5px; /* Marge réduite */
+  }
+  .separator-calendar {
+    border: 1.5px solid #DBE9FF;
+  }
+  .month-display {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Alignement à gauche */
+    margin-bottom: 3px; /* Marge réduite */
+    color: #A2A9C8;
+  }
+  .chevron {
+    cursor: pointer;
+    margin: 0 3px; /* Marge des flèches réduite */
+  }
+  .calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 25px); /* Largeur des cellules réduite */
+    gap: 2px; /* Espacement réduit */
+  }
+  .day-header, .day {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px; /* Largeur réduite */
+    height: 25px; /* Hauteur réduite */
+    font-size: 0.75rem; /* Taille de police réduite */
+  }
+  .day-header {
+    font-weight: bold;
+  }
+  .day {
+    cursor: pointer;
+    border-radius: 20px;
+    transition: background-color 0.3s;
+  }
+  .day:not(.empty):hover:not(.selected) {
+    background-color: #e9e9e9;
+  }
+  .selected {
+    background-color: #0068FF;
+    color: white;
+  }
+  
+  .sidebar-right {
+    width: 250px; /* Même largeur que la sidebar gauche */
+    background-color: #FFFFFF; /* Même couleur de fond que la sidebar gauche */
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+    border: 1px solid #0068FF;
+    border-radius: 30px;
+    height: 40.4rem; /* Hauteur spécifiée */
+    overflow-y: auto; /* Permet le défilement si nécessaire */
+    align-items: center; /* Centrage horizontal du contenu */
+}
 
 /* Responsiveness */
 @media (max-width: 768px) {
