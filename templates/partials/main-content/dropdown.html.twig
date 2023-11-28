@@ -1,0 +1,14 @@
+<div class="dropdown">
+    <button class="dropbtn" onclick="toggleDropdown('{{ dropdown_id }}')">
+        <span class="dropdown-clear" onclick="clearDropdownSelection('{{ dropdown_id }}', event)"></span>
+        {{ dropdown_name }}
+        <span class="dropdown-count"></span>
+        <span class="dropdown-arrow"></span>
+    </button>
+    <div id="{{ dropdown_id }}" class="dropdown-content">
+        {% for item in dropdown_items %}
+            <label><input type="checkbox" name="{{ dropdown_name }}" value="{{ item.value }}">{{ item.label }}</label>
+        {% endfor %}
+    </div>
+</div>
+

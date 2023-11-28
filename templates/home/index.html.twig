@@ -1,0 +1,23 @@
+{# templates/home/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Edutask - Accueil{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="layout">
+        {% include 'partials/sidebar.html.twig' %}
+        {% include 'partials/main_content.html.twig' %}
+        {% include 'partials/sidebar_right.html.twig' %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
+    <script src="{{ asset('js/script.js') }}"></script>
+{% endblock %}
