@@ -1,5 +1,5 @@
 <div class="card-actions">
-    <a href="#" class="card-action">
+    <a href="#" class="card-action" onclick="toggleEditMode('{{ card.card_id }}'); return false;">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
              xmlns="http://www.w3.org/2000/svg">
             <path
@@ -10,7 +10,7 @@
                     d="M10.9485 1.35199C11.1738 1.12661 11.4795 1 11.7982 1C12.117 1 12.4226 1.12661 12.648 1.35199C12.8734 1.57737 13 1.88304 13 2.20177C13 2.5205 12.8734 2.82617 12.648 3.05155L7.26608 8.43348L5 9L5.56652 6.73392L10.9485 1.35199Z"
                     stroke="white" stroke-width="1.5" stroke-linecap="round"
                     stroke-linejoin="round" />
-        </svg>Modifier
+        </svg><p class="nav-text">Modifier</p>
     </a>
     <a href="#" class="card-reminder"
        data-card-id="{{ card.card_id }}"
@@ -30,6 +30,6 @@
                     d="M9 14C8.84756 14.3042 8.62877 14.5566 8.36551 14.7321C8.10226 14.9076 7.8038 15 7.5 15C7.1962 15 6.89774 14.9076 6.63449 14.7321C6.37123 14.5566 6.15244 14.3042 6 14"
                     stroke="#A2A9C8" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
-        Définir un rappel
+        <p class="nav-text">Définir un rappel</p>
     </a>
 </div>

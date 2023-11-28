@@ -369,5 +369,69 @@ function toggleCardAndReminder(cardId, isChecked) {
 
 
 
+function toggleEditMode(cardId) {
+    const card = document.querySelector(`#card-${cardId}`);
+    const isEditable = card.classList.contains('editable');
 
+    if (!isEditable) {
+        // Convertir les éléments en champs éditables et sauvegarder le contenu original
+        card.querySelectorAll('.editable').forEach(element => {
+            const value = element.textContent.trim();
+            element.setAttribute('data-original-content', value); // Sauvegarde du contenu original
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = value;
+            element.innerHTML = '';
+            element.appendChild(input);
+        });
+
+        card.classList.add('editable');
+    } else {
+        // Sauvegarder les modifications ou restaurer le contenu original
+        const updatedData = {};
+        card.querySelectorAll('.editable').forEach(element => {
+            const input = element.querySelector('input');
+            if (input) {
+                const key = element.dataset.field;
+                const value = input.value.trim();
+                updatedData[key] = value;
+                element.innerHTML = value; // Remplacer l'input par du texte
+            }
+        });
+
+        // Traitement des éléments de la liste de détails
+        updatedData['card_detail_items'] = [];
+        card.querySelectorAll('.card-details li.editable').forEach(li => {
+            const input = li.querySelector('input');
+            if (input) {
+                const value = input.value.trim();
+                updatedData['card_detail_items'].push(value);
+                li.innerHTML = value; // Remplacer l'input par du texte
+            }
+        });
+
+        // Envoyer les données mises à jour au contrôleur
+        saveCardData(cardId, updatedData);
+        card.classList.remove('editable');
+    }
+}
+
+function saveCardData(cardId, data) {
+    fetch(`/update-card/${cardId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+        .then(response => response.json())
+        .then(result => {
+            console.log(result);
+            // Gérer la réponse ici
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Gérer les erreurs ici
+        });
+}
 

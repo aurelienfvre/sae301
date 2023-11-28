@@ -5,6 +5,8 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class HomeController extends AbstractController
 {
@@ -82,7 +84,7 @@ class HomeController extends AbstractController
         ];
         $cardTitleColors = [
             'yellow' => '#', // exemple de couleur pour le titre
-            'blue' => '#FFFFFF',
+            'blue' => '#fff',
             // Autres couleurs pour d'autres classes
         ];
         $cardDetailItemColors = [
@@ -127,6 +129,26 @@ class HomeController extends AbstractController
             'date' => '28 Novembre 2023',
         ]);
     }
+    #[Route('/update-card/{id}', name: 'update_card', methods: ['POST'])]
+    public function updateCard(Request $request, int $id): Response
+    {
+        // Récupérer les données envoyées
+        $data = json_decode($request->getContent(), true);
+
+        // Trouver la carte correspondante et la mettre à jour
+        foreach ($this->cards as $key => $card) {
+            if ($card['card_id'] == $id) {
+                $this->cards[$key] = array_merge($card, $data);
+                break;
+            }
+        }
+
+        // Ici, vous devez sauvegarder les modifications dans votre base de données ou votre système de stockage
+
+        return new JsonResponse(['status' => 'success', 'message' => 'Card updated successfully']);
+    }
+
+
     private function getDateItemsFromCards($cards): array
     {
         $dates = array_map(function ($card) {
@@ -152,4 +174,5 @@ class HomeController extends AbstractController
             return ['value' => strtolower($matiere), 'label' => $matiere];
         }, $matieres);
     }
+
 }

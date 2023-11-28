@@ -6,7 +6,10 @@
 
 .layout {
     display: flex;
+    flex-direction: row;
+    align-items: center;
 }
+
 
 .sidebar {
     width: 250px; /* Adjust the width as needed */
@@ -25,7 +28,8 @@
 }
 
 .sidebar-nav {
-    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 
@@ -302,6 +306,7 @@
     border-radius: 20px;
     padding: 20px;
     position: relative;
+    height: fit-content;
     /* Ajoutez d'autres styles pour vos cartes ici */
 }
 .card-date{
@@ -721,20 +726,154 @@
     right: 10px; /* Ajustez selon la marge souhaitée du côté droit de la carte */
     padding: 5px; /* Espace autour de la case à cocher */
 }
-/* Autres styles pour le titre, les détails, etc. */
+
+.card.editable .editable{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: fit-content;
+}
+.nav-text{
+    margin: 0;
+}
 
 
 /* Responsiveness */
+/* Pour les appareils avec une largeur max de 768px (typiquement des tablettes et smartphones) */
 @media (max-width: 768px) {
-    .sidebar {
-        width: 30%;
-        height: auto;
-        flex-direction: row;
-        padding: 0.5em;
+    /* Masquer la sidebar-right */
+    .sidebar-right {
+        display: none;
     }
 
-    .nav-item, .logout-button {
-        flex-grow: 1;
+    /* Transformer la sidebar en barre de navigation au bas de l'écran */
+
+    body{
+        background-color: #f3f6ff;
+    }
+    .layout {
+        display: flex;
+        flex-direction: column-reverse; /* Contenu en haut, sidebar en bas */
+        align-items: center;
+    }
+
+    .sidebar {
+        width: 355px; /* Largeur fixe de la sidebar */
+        margin-left: auto; /* Centrage horizontal : marge gauche automatique */
+        margin-right: auto; /* Centrage horizontal : marge droite automatique */
+        height: auto; /* Hauteur automatique basée sur le contenu */
+        border-radius: 20px;
+        padding: 0;
+        margin-top: 10px;
+        border: none;
+
+    }
+    .dark-mode .logo{
+        display: none;
+    }
+
+    .sidebar-nav {
+        display: flex; /* Utilise Flexbox pour aligner les nav-items */
+        flex-direction: row; /* Alignement horizontal des nav-items */
+        justify-content: space-around;
+    }
+
+    .nav-item {
+        /* Ajustez le padding, la marge et d'autres styles pour les petits écrans */
+        padding: 10px; /* Ajustement du padding */
+        margin: 0; /* Réduction des marges */
+        flex: 1; /* Distribution équitable de l'espace */
         justify-content: center;
     }
+    #settings{
+        display: none;
+    }
+    .nav-text{
+        display: none;
+    }
+
+    /* Ajuster le main content pour utiliser toute la largeur disponible */
+    .main-content {
+        margin: 0; /* Enlever les marges */
+        width: 100%; /* Prendre toute la largeur */
+    }
+
+    .logo svg{
+        display: none;
+    }
+    .logo-text{
+        display: none;
+    }
+    .sidebar-footer{
+        display: none;
+    }
+    .mod-button{
+        display: none;
+    }
+    .main-header {
+        flex-direction: column; /* Change la direction de flex pour empiler verticalement */
+        align-items: flex-start; /* Aligner les éléments à gauche */
+        width: 100%; /* Assurez-vous que le main-header occupe toute la largeur */
+        padding: 20px; /* Ajoutez du padding pour ne pas coller au bord */
+
+    }
+
+    .main-header h1{
+        font-size: 25px;
+    }
+    .main-header h2{
+        font-size: 28px;
+    }
+
+    #search-input {
+        max-width: 100%; /* Permet à la barre de recherche de s'étendre sur toute la largeur */
+        margin: 0; /* Retire les marges supplémentaires */
+    }
+    .clear-filters{
+        display: none;
+    }
+    .title-filter{
+        font-size: 18px;
+    }
+    .card {
+        border-radius: 20px;
+        margin: 10px 0;
+        padding: 15px;
+        font-size: 10px;
+        position: relative;
+    }
+    .send{
+        display: none;
+    }
+    .email-address{
+        display: none;
+    }.card-action{
+            padding: 10px 10px;
+         }
+     .card-reminder{
+         padding: 8px 10px;
+     }
+    .card-action svg, .card-reminder svg {
+        margin-right: 0;
+        width: 14px;
+    }
+    .card-actions {
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .card-container {
+        display: grid;
+        grid-template-columns: none;
+        grid-gap: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        max-height: 235px;
+        padding: 0;
+        grid-auto-rows: 303px;
+        margin-bottom: 0;
+    }
+
 }
+
