@@ -13,21 +13,7 @@ document.querySelectorAll('.nav-item').forEach(item => {
 
 
 //to do list
-document.addEventListener('DOMContentLoaded', function() {
-    var checkboxes = document.querySelectorAll('.card-checkbox');
 
-    checkboxes.forEach(function(checkbox) {
-        checkbox.addEventListener('change', function() {
-            if (this.checked) {
-                // Attendre 150ms avant de cacher la carte pour voir la coche
-                setTimeout(() => {
-                    this.closest('.card').style.opacity = '0';
-                    setTimeout(() => this.closest('.card').style.display = 'none', 100); // puis la cache après une demi-seconde
-                }, 40);
-            }
-        });
-    });
-});
 
 //date
 document.addEventListener('DOMContentLoaded', function() {
@@ -305,5 +291,83 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+//liste de rappels
+function addReminderToSidebar(element) {
+    const cardId = element.getAttribute('data-card-id');
+    if (document.getElementById(`reminder-${cardId}`)) {
+        alert('Ce rappel a déjà été ajouté.');
+        return;
+    }
+
+    const cardClass = element.getAttribute('data-card-class');
+    const cardTitle = element.getAttribute('data-card-title');
+    const cardDetails = element.getAttribute('data-card-details');
+    const cardDetailItems = element.getAttribute('data-card-detail-items');
+    const cardDate = element.getAttribute('data-card-date');
+
+    const reminderList = document.getElementById('reminderList');
+    const reminderCard = document.createElement('div');
+    reminderCard.id = `reminder-${cardId}`;
+    reminderCard.className = `reminder-card ${cardClass}`;
+    reminderCard.style.color = cardClass === 'blue' ? '#FFFFFF' : '#000000';
+    reminderCard.innerHTML = `
+    <div class="reminder-checkbox-container">
+        <input type="checkbox" class="reminder-checkbox" data-card-id="${cardId}" onchange="toggleCardAndReminder('${cardId}', this.checked)">
+        <label for="reminder-checkbox-${cardId}"></label>
+    </div>
+        <div class="reminder-date">${cardDate}</div>
+        <div class="reminder-title">${cardTitle}</div>
+        <div class="reminder-details">${cardDetails} ${cardDetailItems}</div>
+        
+    </div>
+    `;
+    reminderList.appendChild(reminderCard);
+}
+// Pour les cartes de base
+document.querySelectorAll('.card-checkbox').forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+        const cardId = this.getAttribute('data-card-id');
+        toggleCardAndReminder(cardId, this.checked);
+    });
+});
+
+// Pour les cartes de rappel
+document.querySelectorAll('.reminder-checkbox').forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+        const cardId = this.getAttribute('data-card-id');
+        const isChecked = this.checked;
+
+        // Ajouter un délai avant d'appliquer les changements
+        setTimeout(() => {
+            toggleCardAndReminder(cardId, isChecked);
+        }, 200); // Ici, un délai de 200 millisecondes
+    });
+});
+
+
+function toggleCardAndReminder(cardId, isChecked) {
+    const cardCheckbox = document.querySelector(`.card-checkbox[data-card-id="${cardId}"]`);
+    const reminderCheckbox = document.querySelector(`.reminder-checkbox[data-card-id="${cardId}"]`);
+
+    setTimeout(() => {
+        if (cardCheckbox) {
+            cardCheckbox.checked = isChecked;
+            cardCheckbox.closest('.card').style.display = isChecked ? 'none' : '';
+        }
+
+        if (reminderCheckbox) {
+            reminderCheckbox.checked = isChecked;
+            const reminderCard = document.getElementById(`reminder-${cardId}`);
+            if (reminderCard) {
+                reminderCard.style.display = isChecked ? 'none' : '';
+            }
+        }
+    }, 200);
+}
+
+
+
+
 
 

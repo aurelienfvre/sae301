@@ -32,7 +32,7 @@ class HomeController extends AbstractController
             ],
             // Ajoutez d'autres cartes ici si nécessaire
             [
-            'card_class' => 'yellow',
+            'card_class' => 'blue',
             'card_id' => 3,
             'card_date' => '30 Nov. 2023',
             'card_title' => 'Développement Back 🖥️',

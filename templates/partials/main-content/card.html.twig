@@ -3,7 +3,7 @@
      data-date="{{ card.card_date | lower }}"
      data-matiere="{{ card.card_title | lower }}"><!-- Utilisez le filtre 'lower' pour normaliser les données -->
     <div class="checkbox-container">
-        <input type="checkbox" class="card-checkbox" id="checkbox{{ card.card_id }}">
+        <input type="checkbox" class="card-checkbox" id="checkbox{{ card.card_id }}" data-card-id="{{ card.card_id }}">
         <label for="checkbox{{ card.card_id }}"></label>
     </div>
     <div class="card-date" style="background-color: {{ card_date_background_color }}">

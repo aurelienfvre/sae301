@@ -12,7 +12,14 @@
                     stroke-linejoin="round" />
         </svg>Modifier
     </a>
-    <a href="#" class="card-reminder">
+    <a href="#" class="card-reminder"
+       data-card-id="{{ card.card_id }}"
+       data-card-class="{{ card.card_class }}"
+       data-card-title="{{ card.card_title }}"
+       data-card-details="{{ card.card_details }}"
+       data-card-detail-items="{{ card.card_detail_items|join(', ') }}"
+       data-card-date="{{ card.card_date }}"
+       onclick="addReminderToSidebar(this); return false;">
         <svg width="17" height="18" viewBox="0 0 15 16" fill="none"
              xmlns="http://www.w3.org/2000/svg">
             <path

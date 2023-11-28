@@ -635,7 +635,14 @@
     height: 40.4rem; /* Hauteur spécifiée */
     overflow-y: auto; /* Permet le défilement si nécessaire */
     align-items: center; /* Centrage horizontal du contenu */
+    overflow-x: hidden;
+    -ms-overflow-style: none;  /* Cache les barres de défilement pour IE et Edge */
+    scrollbar-width: none;
 }
+.sidebar-right::-webkit-scrollbar {
+    display: none; /* Cache les barres de défilement sur Webkit/Safari/Chrome */
+}
+
 .dark-mode .sidebar-right {
     background-color: #24243A;
 }
@@ -651,6 +658,71 @@
 .dark-mode #darkModeIcon, .dark-mode #darkLogo, .dark-mode #darkLogoutIcon {
     display: block;
 }
+
+.reminder{
+    text-align: left;
+}
+
+.reminder-date{
+    color: #000;
+}
+
+.reminder-card {
+    border-radius: 20px;
+    margin: 10px 0;
+    padding: 15px;
+    font-size: 10px;
+    position: relative;
+}
+.reminder-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: #fff;
+    margin: 0;
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    border: 2px solid #A2A9C8;
+    border-radius: 50%;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    top: -2px;
+}
+.dark-mode .reminder {
+    color: #A2A9C8;
+}
+
+.reminder-card.blue {
+    background-color: #007BFF;
+}
+
+.reminder-card.yellow {
+    background-color: #FADB39;
+}
+
+.reminder-date{
+    background-color: #fff;
+    padding: 6px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    font-weight: 500;
+    margin: 0 0 5px 0;
+}
+.reminder-title{
+    font-weight: 600;
+}
+.reminder-checkbox-container {
+    position: absolute;
+    top: 10px;  /* Ajustez selon la marge souhaitée du haut de la carte */
+    right: 10px; /* Ajustez selon la marge souhaitée du côté droit de la carte */
+    padding: 5px; /* Espace autour de la case à cocher */
+}
+/* Autres styles pour le titre, les détails, etc. */
+
 
 /* Responsiveness */
 @media (max-width: 768px) {
