@@ -6,9 +6,10 @@
 
 //date
 document.addEventListener('DOMContentLoaded', function() {
-    var today = new Date();
-    var options = { day: 'numeric', month: 'long', year: 'numeric' };
-    var dateString = today.toLocaleDateString('fr-FR', options);
+    const today = new Date();
+    const options = {day: 'numeric', month: 'long', year: 'numeric'};
+    let dateString;
+    dateString = today.toLocaleDateString('fr-FR', options);
     document.querySelector('.titles-container h2').textContent = dateString;
 });
 
@@ -22,9 +23,9 @@ function toggleDropdown(dropdownId) {
 // Ajoutez un événement pour fermer les dropdowns si l'utilisateur clique en dehors
 window.onclick = function(event) {
     if (!event.target.matches('.dropbtn') && !event.target.matches('.dropdown-clear')) {
-        var dropdowns = document.getElementsByClassName('dropdown-content');
-        for (var i = 0; i < dropdowns.length; i++) {
-            var openDropdown = dropdowns[i];
+        const dropdowns = document.getElementsByClassName('dropdown-content');
+        for (let i = 0; i < dropdowns.length; i++) {
+            const openDropdown = dropdowns[i];
             if (openDropdown.classList.contains('show')) {
                 openDropdown.classList.remove('show');
             }
@@ -49,15 +50,15 @@ document.querySelectorAll('.dropdown-content input[type="checkbox"]').forEach(fu
 
 // Fonction pour mettre à jour les tags des filtres sélectionnés
 function updateSelectedFilters() {
-    var selectedFilters = document.getElementById('selected-filters');
+    const selectedFilters = document.getElementById('selected-filters');
     selectedFilters.innerHTML = ''; // Efface les tags existants
-    var checkboxes = document.querySelectorAll('.dropdown-content input[type="checkbox"]:checked');
+    const checkboxes = document.querySelectorAll('.dropdown-content input[type="checkbox"]:checked');
     checkboxes.forEach(function(checkbox) {
-        var label = checkbox.parentNode.textContent.trim();
-        var tag = document.createElement('div');
+        const label = checkbox.parentNode.textContent.trim();
+        const tag = document.createElement('div');
         tag.className = 'filter-tag';
         tag.textContent = label;
-        var removeTag = document.createElement('span');
+        const removeTag = document.createElement('span');
         removeTag.className = 'remove-tag';
         removeTag.innerHTML = '&times;';
         removeTag.onclick = function() {
@@ -75,7 +76,7 @@ function updateSelectedFilters() {
 // Fonction pour effacer les sélections et les tags
 // Fonction pour réinitialiser les sélections dans un dropdown
 function clearDropdownSelection(dropdownId) {
-    var checkboxes = document.querySelectorAll('#' + dropdownId + ' input[type="checkbox"]');
+    const checkboxes = document.querySelectorAll('#' + dropdownId + ' input[type="checkbox"]');
     checkboxes.forEach(checkbox => checkbox.checked = false);
 
     updateSelectedFilters();
@@ -88,7 +89,7 @@ function clearDropdownSelection(dropdownId) {
 document.querySelectorAll('.dropdown-clear').forEach(function(clearSpan) {
     clearSpan.addEventListener('click', function(event) {
         event.stopPropagation();
-        var dropdownId = this.closest('.dropdown').querySelector('.dropdown-content').id;
+        const dropdownId = this.closest('.dropdown').querySelector('.dropdown-content').id;
         clearDropdownSelection(dropdownId);
     });
 });
@@ -111,13 +112,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialisation des compteurs des dropdowns
     let dropdowns = document.getElementsByClassName('dropdown-content');
-    for (var i = 0; i < dropdowns.length; i++) {
+    for (let i = 0; i < dropdowns.length; i++) {
         updateDropdownCount(dropdowns[i].id);
     }
 
     // Attacher l'écouteur d'événements au bouton clear-filters
     clearFiltersButton.addEventListener('click', function() {
-        var allCheckboxes = document.querySelectorAll('.dropdown-content input[type="checkbox"]');
+        const allCheckboxes = document.querySelectorAll('.dropdown-content input[type="checkbox"]');
         allCheckboxes.forEach(checkbox => checkbox.checked = false);
 
         updateSelectedFilters();
@@ -125,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Mettre à jour le compteur pour chaque dropdown
         let dropdowns = document.getElementsByClassName('dropdown-content');
-        for (var i = 0; i < dropdowns.length; i++) {
+        for (let i = 0; i < dropdowns.length; i++) {
             updateDropdownCount(dropdowns[i].id);
         }
     });
@@ -134,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.dropdown-clear').forEach(function(clearSpan) {
         clearSpan.addEventListener('click', function(event) {
             event.stopPropagation();
-            var dropdownId = this.closest('.dropdown').querySelector('.dropdown-content').id;
+            const dropdownId = this.closest('.dropdown').querySelector('.dropdown-content').id;
             clearDropdownSelection(dropdownId); // Assurez-vous que cette fonction est définie
         });
     });
@@ -145,9 +146,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 function updateDropdownCount(dropdownId) {
-    var count = document.querySelectorAll('#' + dropdownId + ' input[type="checkbox"]:checked').length;
-    var dropdownButton = document.querySelector('[onclick="toggleDropdown(\'' + dropdownId + '\')"]');
-    var countSpan = dropdownButton ? dropdownButton.querySelector('.dropdown-count') : null;
+    const count = document.querySelectorAll('#' + dropdownId + ' input[type="checkbox"]:checked').length;
+    const dropdownButton = document.querySelector('[onclick="toggleDropdown(\'' + dropdownId + '\')"]');
+    const countSpan = dropdownButton ? dropdownButton.querySelector('.dropdown-count') : null;
     if (countSpan) {
         countSpan.textContent = count.toString(); // Affiche le nombre sans parenthèses
     }
@@ -155,8 +156,8 @@ function updateDropdownCount(dropdownId) {
 
 // Initialisation des compteurs au chargement de la page
 document.addEventListener('DOMContentLoaded', function() {
-    var dropdowns = document.getElementsByClassName('dropdown-content');
-    for (var i = 0; i < dropdowns.length; i++) {
+    const dropdowns = document.getElementsByClassName('dropdown-content');
+    for (let i = 0; i < dropdowns.length; i++) {
         updateDropdownCount(dropdowns[i].id);
     }
 });
@@ -242,26 +243,26 @@ function normalizeString(str) {
 }
 
 function applyFiltersAndSearch() {
-    var searchValue = normalizeString(document.getElementById('search-input').value);
-    var selectedDates = Array.from(document.querySelectorAll('#date-dropdown input[type="checkbox"]:checked')).map(cb => normalizeString(cb.value));
-    var selectedMatieres = Array.from(document.querySelectorAll('#matieres-dropdown input[type="checkbox"]:checked')).map(cb => normalizeString(cb.value));
-    var selectedGroupes = Array.from(document.querySelectorAll('#group-dropdown input[type="checkbox"]:checked')).map(cb => normalizeString(cb.value));
-    var selectedSemestres = Array.from(document.querySelectorAll('#semestre-dropdown input[type="checkbox"]:checked')).map(cb => normalizeString(cb.value));
+    const searchValue = normalizeString(document.getElementById('search-input').value);
+    const selectedDates = Array.from(document.querySelectorAll('#date-dropdown input[type="checkbox"]:checked')).map(cb => normalizeString(cb.value));
+    const selectedMatieres = Array.from(document.querySelectorAll('#matieres-dropdown input[type="checkbox"]:checked')).map(cb => normalizeString(cb.value));
+    const selectedGroupes = Array.from(document.querySelectorAll('#group-dropdown input[type="checkbox"]:checked')).map(cb => normalizeString(cb.value));
+    const selectedSemestres = Array.from(document.querySelectorAll('#semestre-dropdown input[type="checkbox"]:checked')).map(cb => normalizeString(cb.value));
 
-    var cards = document.querySelectorAll('.card');
+    const cards = document.querySelectorAll('.card');
     cards.forEach(function(card) {
-        var cardDate = normalizeString(card.getAttribute('data-date'));
-        var cardMatiere = normalizeString(card.getAttribute('data-matiere'));
-        var cardGroupe = normalizeString(card.getAttribute('data-groupe'));
-        var cardSemestre = normalizeString(card.getAttribute('data-semestre'));
+        const cardDate = normalizeString(card.getAttribute('data-date'));
+        const cardMatiere = normalizeString(card.getAttribute('data-matiere'));
+        const cardGroupe = normalizeString(card.getAttribute('data-groupe'));
+        const cardSemestre = normalizeString(card.getAttribute('data-semestre'));
 
-        var dateMatch = selectedDates.length === 0 || selectedDates.includes(cardDate);
-        var matiereMatch = selectedMatieres.length === 0 || selectedMatieres.includes(cardMatiere);
-        var groupeMatch = selectedGroupes.length === 0 || selectedGroupes.includes(cardGroupe);
-        var semestreMatch = selectedSemestres.length === 0 || selectedSemestres.includes(cardSemestre);
-        var isCalendarMatch = selectedCalendarDate === '' || cardDate === selectedCalendarDate;
+        const dateMatch = selectedDates.length === 0 || selectedDates.includes(cardDate);
+        const matiereMatch = selectedMatieres.length === 0 || selectedMatieres.includes(cardMatiere);
+        const groupeMatch = selectedGroupes.length === 0 || selectedGroupes.includes(cardGroupe);
+        const semestreMatch = selectedSemestres.length === 0 || selectedSemestres.includes(cardSemestre);
+        const isCalendarMatch = selectedCalendarDate === '' || cardDate === selectedCalendarDate;
 
-        var isSearchMatch = searchValue === '' || cardDate.includes(searchValue) ||
+        const isSearchMatch = searchValue === '' || cardDate.includes(searchValue) ||
             cardMatiere.includes(searchValue) || cardGroupe.includes(searchValue) ||
             cardSemestre.includes(searchValue) ||
             card.querySelector('.details').textContent.toLowerCase().includes(searchValue) ||
@@ -290,9 +291,9 @@ renderCalendar();
 
 //dark mode
 function initializeDarkModeToggle() {
-    var body = document.body;
-    var lightModeIcon = document.getElementById('lightModeIcon');
-    var darkModeIcon = document.getElementById('darkModeIcon');
+    const body = document.body;
+    const lightModeIcon = document.getElementById('lightModeIcon');
+    const darkModeIcon = document.getElementById('darkModeIcon');
 
     // Vérifier et appliquer l'état du mode sombre stocké
     if (localStorage.getItem('darkMode') === 'true') {
@@ -304,7 +305,7 @@ function initializeDarkModeToggle() {
     }
 
     // Gestionnaire d'événements pour le basculement
-    var toggleButton = document.querySelector('.mod-button a');
+    const toggleButton = document.querySelector('.mod-button a');
     if (toggleButton) {
         toggleButton.addEventListener('click', function(e) {
             e.preventDefault();
