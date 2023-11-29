@@ -5,13 +5,18 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 
 
 class AddController extends AbstractController
 {
     #[Route('/add', name: 'app_add')]
-    public function index(): Response
+    public function index(Request $request): Response
     {
+        $session = $request->getSession();
+        $username = $session->get('user')['prenom'] ?? null;
         $cards = [
             [
                 'card_class' => 'yellow',
@@ -122,10 +127,63 @@ class AddController extends AbstractController
             'class_items' => $class_items,
             'card_title_colors' => $cardTitleColors,
             'card_detail_item_colors' => $cardDetailItemColors,
-            'username' => 'Simon',
+            'username' => $username,
             'date' => '28 Novembre 2023',
         ]);
     }
+    #[Route('/register', name: 'user_register', methods: ['POST'])]
+    public function register(Request $request): Response {
+        $data = json_decode($request->getContent(), true);
+        $nom = $data['nom'];
+        $prenom = $data['prenom'];
+        $email = $data['email'];
+        $password = $data['password'];
+        $confirmPassword = $data['confirmPassword'];
+
+        // Validation
+        if (!preg_match("/^[a-z]+\.[a-z]+@etudiant\.univ-reims\.fr$/", $email)) {
+            return new JsonResponse(['status' => 'error', 'message' => 'Invalid email format']);
+        }
+
+        if ($password !== $confirmPassword) {
+            return new JsonResponse(['status' => 'error', 'message' => 'Passwords do not match']);
+        }
+
+        // Hashage du mot de passe
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+        // Enregistrement de l'utilisateur
+        $path = $this->getParameter('kernel.project_dir') . '/var/data/users.json';
+        $users = json_decode(file_get_contents($path), true);
+        $users[] = ['nom' => $nom, 'prenom' => $prenom, 'email' => $email, 'password' => $hashedPassword];
+        file_put_contents($path, json_encode($users));
+
+        return new JsonResponse(['status' => 'success', 'message' => 'User registered successfully']);
+    }
+
+    #[Route('/login', name: 'user_login', methods: ['POST'])]
+    public function login(Request $request): Response
+    {
+        // Logique de connexion...
+        $data = json_decode($request->getContent(), true);
+        $email = $data['email'];
+        $password = $data['password'];
+
+        // Lire le fichier JSON pour les utilisateurs
+        $path = $this->getParameter('kernel.project_dir') . '/var/data/users.json';
+        $users = json_decode(file_get_contents($path), true);
+
+        foreach ($users as $user) {
+            if ($user['email'] === $email && password_verify($password, $user['password'])) {
+                $session = $request->getSession();
+                $session->set('user', $user);
+                return new JsonResponse(['status' => 'success', 'message' => 'User logged in successfully']);
+            }
+        }
+
+        return new JsonResponse(['status' => 'error', 'message' => 'Invalid credentials']);
+    }
+
     private function getDateItemsFromCards($cards): array
     {
         $dates = array_map(function ($card) {

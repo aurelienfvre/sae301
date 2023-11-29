@@ -16,6 +16,25 @@ class HomeController extends AbstractController
     {
         $session = $request->getSession();
         $username = $session->get('user')['prenom'] ?? null;
+        $group_items = [
+            ['value' => 'A', 'label' => 'A'],
+            ['value' => 'B', 'label' => 'B'],
+            ['value' => 'C', 'label' => 'C'],
+            ['value' => 'D', 'label' => 'D'],
+            ['value' => 'E', 'label' => 'E'],
+            ['value' => 'F', 'label' => 'F'],
+            ['value' => 'G', 'label' => 'G'],
+            ['value' => 'H', 'label' => 'H'],
+
+        ];
+        $rankItems = [
+            ['value' => 'Semestre 1', 'label' => 'Semestre 1'],
+            ['value' => 'Semestre 2', 'label' => 'Semestre 2'],
+            ['value' => 'Semestre 3', 'label' => 'Semestre 3'],
+            ['value' => 'Semestre 4', 'label' => 'Semestre 4'],
+            ['value' => 'Semestre 5', 'label' => 'Semestre 5'],
+            ['value' => 'Semestre 6', 'label' => 'Semestre 6'],
+        ];
         $cards = [
             [
                 'card_class' => 'yellow',
@@ -25,6 +44,8 @@ class HomeController extends AbstractController
                 'card_details' => 'Deux rendus :',
                 'card_detail_items' => ['Rendu des esquisses', 'Rendu de la charte graphique'],
                 'card_email' => 'johndoe@univ-reims.fr',
+                'card_rank' => 'Semestre 1',
+                'card_group' => 'B',
             ],
             [
                 'card_class' => 'blue',
@@ -34,6 +55,8 @@ class HomeController extends AbstractController
                 'card_details' => 'Trois rendus :',
                 'card_detail_items' => ['Rendu du code', 'Rendu du rapport', 'Rendu de la présentation'],
                 'card_email' => 'hihi@gmail.com',
+                'card_rank' => 'Semestre 2',
+                'card_group' => 'B',
             ],
             // Ajoutez d'autres cartes ici si nécessaire
             [
@@ -44,6 +67,8 @@ class HomeController extends AbstractController
             'card_details' => 'Trois rendus :',
             'card_detail_items' => ['Rendu du code', 'Rendu du rapport', 'Rendu de la présentation'],
             'card_email' => 'caca@hihi.com',
+                'card_rank' => 'Semestre 3',
+                'card_group' => 'C',
             ],
 
         ];
@@ -100,16 +125,7 @@ class HomeController extends AbstractController
         $dateItems = $this->getDateItemsFromCards($cards);
         $matiereItems = $this->getMatiereItemsFromCards($cards);
 
-        $class_items = [
-            ['value' => 'A', 'label' => 'A'],
-            ['value' => 'B', 'label' => 'B'],
-            ['value' => 'C', 'label' => 'C'],
-            ['value' => 'D', 'label' => 'D'],
-            ['value' => 'E', 'label' => 'E'],
-            ['value' => 'F', 'label' => 'F'],
-            ['value' => 'G', 'label' => 'G'],
-            ['value' => 'H', 'label' => 'H'],
-        ];
+
 
         // Rendu de la vue avec toutes les données
         return $this->render('home/index.html.twig', [
@@ -126,7 +142,8 @@ class HomeController extends AbstractController
             'card_email_address_colors' => $cardEmailAddressColors,
             'date_items' => $dateItems,
             'matiere_items' => $matiereItems,
-            'class_items' => $class_items,
+            'card_rank_items' => $rankItems,
+            'group_items' => $group_items,
             'card_title_colors' => $cardTitleColors,
             'card_detail_item_colors' => $cardDetailItemColors,
             'date' => '28 Novembre 2023',

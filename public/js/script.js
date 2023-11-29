@@ -65,6 +65,7 @@ function updateSelectedFilters() {
             tag.remove();
             updateSelectedFilters(); // Refresh the tags after removal
             updateDropdownCount(checkbox.closest('.dropdown-content').id);
+            applyFiltersAndSearch(); // Ajout de cette ligne
         };
         tag.appendChild(removeTag);
         selectedFilters.appendChild(tag);
@@ -79,6 +80,8 @@ function clearDropdownSelection(dropdownId) {
 
     updateSelectedFilters();
     updateDropdownCount(dropdownId);
+    applyFiltersAndSearch();
+
 }
 
 // Attacher les écouteurs d'événements aux éléments dropdown-clear
@@ -114,7 +117,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Attacher l'écouteur d'événements au bouton clear-filters
     clearFiltersButton.addEventListener('click', function() {
-        // Votre code pour effacer les filtres
+        var allCheckboxes = document.querySelectorAll('.dropdown-content input[type="checkbox"]');
+        allCheckboxes.forEach(checkbox => checkbox.checked = false);
+
+        updateSelectedFilters();
+        applyFiltersAndSearch(); // Actualise l'affichage des cartes
+
+        // Mettre à jour le compteur pour chaque dropdown
+        let dropdowns = document.getElementsByClassName('dropdown-content');
+        for (var i = 0; i < dropdowns.length; i++) {
+            updateDropdownCount(dropdowns[i].id);
+        }
     });
 
     // Attacher des écouteurs d'événements aux éléments dropdown-clear
@@ -232,22 +245,29 @@ function applyFiltersAndSearch() {
     var searchValue = normalizeString(document.getElementById('search-input').value);
     var selectedDates = Array.from(document.querySelectorAll('#date-dropdown input[type="checkbox"]:checked')).map(cb => normalizeString(cb.value));
     var selectedMatieres = Array.from(document.querySelectorAll('#matieres-dropdown input[type="checkbox"]:checked')).map(cb => normalizeString(cb.value));
+    var selectedGroupes = Array.from(document.querySelectorAll('#group-dropdown input[type="checkbox"]:checked')).map(cb => normalizeString(cb.value));
+    var selectedSemestres = Array.from(document.querySelectorAll('#semestre-dropdown input[type="checkbox"]:checked')).map(cb => normalizeString(cb.value));
 
     var cards = document.querySelectorAll('.card');
     cards.forEach(function(card) {
         var cardDate = normalizeString(card.getAttribute('data-date'));
         var cardMatiere = normalizeString(card.getAttribute('data-matiere'));
+        var cardGroupe = normalizeString(card.getAttribute('data-groupe'));
+        var cardSemestre = normalizeString(card.getAttribute('data-semestre'));
 
         var dateMatch = selectedDates.length === 0 || selectedDates.includes(cardDate);
         var matiereMatch = selectedMatieres.length === 0 || selectedMatieres.includes(cardMatiere);
+        var groupeMatch = selectedGroupes.length === 0 || selectedGroupes.includes(cardGroupe);
+        var semestreMatch = selectedSemestres.length === 0 || selectedSemestres.includes(cardSemestre);
         var isCalendarMatch = selectedCalendarDate === '' || cardDate === selectedCalendarDate;
 
         var isSearchMatch = searchValue === '' || cardDate.includes(searchValue) ||
-            cardMatiere.includes(searchValue) ||
+            cardMatiere.includes(searchValue) || cardGroupe.includes(searchValue) ||
+            cardSemestre.includes(searchValue) ||
             card.querySelector('.details').textContent.toLowerCase().includes(searchValue) ||
             card.querySelector('.email-address').textContent.toLowerCase().includes(searchValue);
 
-        card.style.display = (dateMatch && matiereMatch && isSearchMatch && isCalendarMatch) ? '' : 'none';
+        card.style.display = (dateMatch && matiereMatch && groupeMatch && semestreMatch && isSearchMatch && isCalendarMatch) ? '' : 'none';
     });
 }
 

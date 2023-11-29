@@ -5,9 +5,30 @@
         <h3 class="title-filter">Liste des prochaines dates de rendu</h3>
 
         <div class="dropdown-container">
-            {% include 'partials/main-content/dropdown.html.twig' with {'dropdown_id': 'date-dropdown', 'dropdown_name': 'Dates', 'dropdown_items': date_items} %}
-            {% include 'partials/main-content/dropdown.html.twig' with {'dropdown_id': 'classes-dropdown', 'dropdown_name': 'Classes', 'dropdown_items': class_items} %}
-            {% include 'partials/main-content/dropdown.html.twig' with {'dropdown_id': 'matieres-dropdown', 'dropdown_name': 'Matieres', 'dropdown_items': matiere_items} %}
+            {% include 'partials/main-content/dropdown.html.twig' with {
+                'dropdown_id': 'date-dropdown',
+                'dropdown_name': 'Dates',
+                'dropdown_items': date_items
+            } %}
+
+            {% include 'partials/main-content/dropdown.html.twig' with {
+                'dropdown_id': 'semestre-dropdown',
+                'dropdown_name': 'Semestre',
+                'dropdown_items': card_rank_items
+            } %}
+
+            {% include 'partials/main-content/dropdown.html.twig' with {
+                'dropdown_id': 'group-dropdown',
+                'dropdown_name': 'Groupe',
+                'dropdown_items': group_items
+            } %}
+
+            {% include 'partials/main-content/dropdown.html.twig' with {
+                'dropdown_id': 'matieres-dropdown',
+                'dropdown_name': 'Matieres',
+                'dropdown_items': matiere_items
+            } %}
+
             <button id="clear-filters" class="clear-filters">
                 <span class="clear-icon"></span>
                 Effacer les filtres

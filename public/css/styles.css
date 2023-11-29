@@ -747,7 +747,9 @@
     color: #A2A9C8;
     margin: 0;
 }
-
+.semestre,.groupe{
+    display: none;
+}
 
 /* Responsiveness */
 /* Pour les appareils avec une largeur max de 768px (typiquement des tablettes et smartphones) */

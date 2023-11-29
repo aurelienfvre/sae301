@@ -1,6 +1,8 @@
 <div class="card" id="card-{{ card.card_id }}"
      style="background-color: {{ card_color }}; border-color: {{ card_border_color }}"
      data-date="{{ card.card_date | lower }}"
+     data-semestre="{{ card.card_rank|lower|default('non spécifié') }}"
+     data-groupe="{{ card.card_group|lower|default('non spécifié') }}"
      data-matiere="{{ card.card_title | lower }}">
     <div class="checkbox-container">
         <input type="checkbox" class="card-checkbox" id="checkbox{{ card.card_id }}" data-card-id="{{ card.card_id }}">
@@ -19,11 +21,15 @@
                 {{ card.card_details }}
             </div>
 
+
             <ul class="card-details" style="color: {{ card_detail_item_color }}">
                 {% for detail in card.card_detail_items %}
                     <li class="editable" data-field="card_detail_items">{{ detail }}</li>
                 {% endfor %}
             </ul>
+            <p class="semestre">Semestre: {{ card.card_rank|default('Non spécifié') }}</p>
+            <p class="groupe">Groupe: {{ card.card_group|default('Non spécifié') }}</p>
+
             <p class="send" style="color: {{ card_send_color }}">À envoyer à l'adresse suivante :</p>
             <p class="email-address editable" data-field="card_email" style="color: {{ card_email_address_color }}">
                 {{ card.card_email }}
