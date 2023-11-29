@@ -753,7 +753,7 @@
 
 /* Responsiveness */
 /* Pour les appareils avec une largeur max de 768px (typiquement des tablettes et smartphones) */
-@media (max-width: 768px) {
+@media (max-width: 940px) {
     /* Masquer la sidebar-right */
     .sidebar-right {
         display: none;
@@ -893,4 +893,14 @@
     }
 
 }
-
+@media (max-width: 590px) {
+    .dropdown-container{
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(185px, 0fr));
+        gap: 10px;
+        margin: 10px 0;
+    }
+    .dropdown{
+        width: fit-content;
+    }
+}
