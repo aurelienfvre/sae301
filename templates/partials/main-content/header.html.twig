@@ -1,7 +1,11 @@
 <header class="main-header">
     <div class="titles-container">
         <h2>{{ date }}</h2>
-        <h1>Hello, {{ username }} 👋</h1>
+        {% if username %}
+            <h1>Hello, {{ username }} 👋</h1>
+        {% else %}
+            <h1>Hello 👋</h1>
+        {% endif %}
     </div>
     <div class="search-bar">
         <input type="text" placeholder="Recherche" id="search-input">

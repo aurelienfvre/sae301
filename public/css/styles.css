@@ -4,11 +4,7 @@
     font-family: 'Inter', sans-serif;
 }
 
-.layout {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
+
 
 
 .sidebar {
@@ -33,7 +29,7 @@
 }
 
 
-.nav-item {
+.nav-item,.nav-btn {
     box-sizing: border-box;
     padding: 10px 45px; /* Utilisez un padding uniforme */
     margin: 5px 0;
@@ -44,6 +40,15 @@
     font-size: 17px;
     text-decoration: none;
     transition: background-color 0.3s, color 0.3s; /* Transition douce pour le changement d'état */
+}
+
+.layout{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.nav-btn{
+    padding: 0;
 }
 .dark-mode .nav-item {
     color: #fff;
@@ -89,7 +94,7 @@
     text-align: center;
     font-weight: 500;
     /* font-size: 1.5em; */
-    margin: 0 0 70px 0;
+    margin: 0 0 13px 0;
 }
 .dark-mode .logo-text {
     color: #F3F6FF;
@@ -205,6 +210,7 @@
     border-radius: 30px;
     width: 52rem;
     max-height: 40.4rem;
+    height: 40.4rem;
     overflow-y: hidden;
 }
 .dark-mode .main-content {
@@ -736,6 +742,11 @@
 .nav-text{
     margin: 0;
 }
+.navbar-text{
+    text-decoration: none !important;
+    color: #A2A9C8;
+    margin: 0;
+}
 
 
 /* Responsiveness */
@@ -796,6 +807,7 @@
     .main-content {
         margin: 0; /* Enlever les marges */
         width: 100%; /* Prendre toute la largeur */
+        height: 31rem;
     }
 
     .logo svg{
@@ -810,10 +822,13 @@
     .mod-button{
         display: none;
     }
+    .navbar-text{
+        display: none;
+    }
     .main-header {
         flex-direction: column; /* Change la direction de flex pour empiler verticalement */
         align-items: flex-start; /* Aligner les éléments à gauche */
-        width: 100%; /* Assurez-vous que le main-header occupe toute la largeur */
+        width: 60%; /* Assurez-vous que le main-header occupe toute la largeur */
         padding: 20px; /* Ajoutez du padding pour ne pas coller au bord */
 
     }

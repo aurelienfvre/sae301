@@ -15,8 +15,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
 </head>
 <body>
-{% block body %}
-{% endblock %}
+
+<body>
+
+        {% block body %}
+            {# Le contenu spécifique à chaque page sera rendu ici #}
+        {% endblock %}
+
 
 {# Scripts JS spécifiques à votre projet #}
 {% block javascripts %}

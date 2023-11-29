@@ -1,15 +1,4 @@
 //navbar
-document.querySelectorAll('.nav-item').forEach(item => {
-    item.addEventListener('click', function() {
-        // Supprimer la classe active de tous les éléments
-        document.querySelectorAll('.nav-item').forEach(nav => {
-            nav.classList.remove('active');
-        });
-
-        // Ajouter la classe active à l'élément cliqué
-        this.classList.add('active');
-    });
-});
 
 
 //to do list
@@ -22,10 +11,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var dateString = today.toLocaleDateString('fr-FR', options);
     document.querySelector('.titles-container h2').textContent = dateString;
 });
-
-
-
-
 
 
 //dropdown
@@ -87,28 +72,16 @@ function updateSelectedFilters() {
 }
 
 // Fonction pour effacer les sélections et les tags
-document.getElementById('clear-filters').addEventListener('click', function() {
-    document.querySelectorAll('.dropdown-content input[type="checkbox"]').forEach(function(checkbox) {
-        checkbox.checked = false;
-    });
-    updateSelectedFilters(); // Mettre à jour les tags
-    var dropdowns = document.getElementsByClassName('dropdown-content');
-    for (var i = 0; i < dropdowns.length; i++) {
-        updateDropdownCount(dropdowns[i].id);
-    }
-});
+// Fonction pour réinitialiser les sélections dans un dropdown
+function clearDropdownSelection(dropdownId) {
+    var checkboxes = document.querySelectorAll('#' + dropdownId + ' input[type="checkbox"]');
+    checkboxes.forEach(checkbox => checkbox.checked = false);
 
-// Fonction pour décocher toutes les cases d'un menu déroulant spécifique
-function clearDropdownSelection(dropdownId, event) {
-    event.stopPropagation(); // Empêche le clic de déclencher l'ouverture du menu déroulant
-    document.querySelectorAll('#' + dropdownId + ' input[type="checkbox"]').forEach(function(checkbox) {
-        checkbox.checked = false;
-    });
-    updateSelectedFilters(); // Mettre à jour les tags
-    updateDropdownCount(dropdownId); // Mettre à jour le compteur
+    updateSelectedFilters();
+    updateDropdownCount(dropdownId);
 }
 
-// Empêcher la propagation du clic sur la croix pour ne pas déclencher le menu déroulant
+// Attacher les écouteurs d'événements aux éléments dropdown-clear
 document.querySelectorAll('.dropdown-clear').forEach(function(clearSpan) {
     clearSpan.addEventListener('click', function(event) {
         event.stopPropagation();
@@ -116,8 +89,48 @@ document.querySelectorAll('.dropdown-clear').forEach(function(clearSpan) {
         clearDropdownSelection(dropdownId);
     });
 });
+document.addEventListener('DOMContentLoaded', function() {
+    // Vérifier si l'élément #clear-filters existe et le créer si nécessaire
+    let clearFiltersButton = document.getElementById('clear-filters');
+    if (!clearFiltersButton) {
+        clearFiltersButton = document.createElement('button');
+        clearFiltersButton.id = 'clear-filters';
+        clearFiltersButton.style.display = 'none'; // Cachez-le car il est factice
+        document.body.appendChild(clearFiltersButton);
+    }
+    document.querySelectorAll('.dropdown-clear').forEach(function(clearSpan) {
+        clearSpan.addEventListener('click', function(event) {
+            event.stopPropagation();
+            let dropdownId = this.closest('.dropdown').querySelector('.dropdown-content').id;
+            clearDropdownSelection(dropdownId);
+        });
+    });
 
-// Fonction pour mettre à jour le compteur de cases à cocher sélectionnées
+    // Initialisation des compteurs des dropdowns
+    let dropdowns = document.getElementsByClassName('dropdown-content');
+    for (var i = 0; i < dropdowns.length; i++) {
+        updateDropdownCount(dropdowns[i].id);
+    }
+
+    // Attacher l'écouteur d'événements au bouton clear-filters
+    clearFiltersButton.addEventListener('click', function() {
+        // Votre code pour effacer les filtres
+    });
+
+    // Attacher des écouteurs d'événements aux éléments dropdown-clear
+    document.querySelectorAll('.dropdown-clear').forEach(function(clearSpan) {
+        clearSpan.addEventListener('click', function(event) {
+            event.stopPropagation();
+            var dropdownId = this.closest('.dropdown').querySelector('.dropdown-content').id;
+            clearDropdownSelection(dropdownId); // Assurez-vous que cette fonction est définie
+        });
+    });
+
+
+
+});
+
+
 function updateDropdownCount(dropdownId) {
     var count = document.querySelectorAll('#' + dropdownId + ' input[type="checkbox"]:checked').length;
     var dropdownButton = document.querySelector('[onclick="toggleDropdown(\'' + dropdownId + '\')"]');
@@ -256,41 +269,48 @@ renderCalendar();
 
 
 //dark mode
-document.addEventListener('DOMContentLoaded', function() {
-    var toggleButton = document.getElementById('toggleDarkMode');
+function initializeDarkModeToggle() {
+    var body = document.body;
+    var lightModeIcon = document.getElementById('lightModeIcon');
+    var darkModeIcon = document.getElementById('darkModeIcon');
 
+    // Vérifier et appliquer l'état du mode sombre stocké
+    if (localStorage.getItem('darkMode') === 'true') {
+        body.classList.add('dark-mode');
+        if (lightModeIcon && darkModeIcon) {
+            lightModeIcon.style.display = 'none';
+            darkModeIcon.style.display = 'block';
+        }
+    }
+
+    // Gestionnaire d'événements pour le basculement
+    var toggleButton = document.querySelector('.mod-button a');
     if (toggleButton) {
-        toggleButton.addEventListener('click', function() {
-            var body = document.body;
-            var lightModeIcon = document.getElementById('lightModeIcon');
-            var darkModeIcon = document.getElementById('darkModeIcon');
-            var normalLogo = document.getElementById('normalLogo');
-            var darkLogo = document.getElementById('darkLogo');
-            var lightLogoutIcon = document.getElementById('lightLogoutIcon');
-            var darkLogoutIcon = document.getElementById('darkLogoutIcon');
+        toggleButton.addEventListener('click', function(e) {
+            e.preventDefault();
 
             // Bascule la classe pour le mode sombre
             body.classList.toggle('dark-mode');
 
+            // Enregistrer l'état dans localStorage
+            localStorage.setItem('darkMode', body.classList.contains('dark-mode'));
+
             // Bascule les icônes SVG
-            if (body.classList.contains('dark-mode')) {
-                lightModeIcon.style.display = 'none';
-                darkModeIcon.style.display = 'block';
-                normalLogo.style.display = 'none';
-                darkLogo.style.display = 'block';
-                lightLogoutIcon.style.display = 'none';
-                darkLogoutIcon.style.display = 'block';
-            } else {
-                lightModeIcon.style.display = 'block';
-                darkModeIcon.style.display = 'none';
-                normalLogo.style.display = 'block';
-                darkLogo.style.display = 'none';
-                lightLogoutIcon.style.display = 'block';
-                darkLogoutIcon.style.display = 'none';
+            if (lightModeIcon && darkModeIcon) {
+                lightModeIcon.style.display = body.classList.contains('dark-mode') ? 'none' : 'block';
+                darkModeIcon.style.display = body.classList.contains('dark-mode') ? 'block' : 'none';
             }
         });
     }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    initializeDarkModeToggle();
 });
+
+
+
+
 
 //liste de rappels
 function addReminderToSidebar(element) {
@@ -433,5 +453,36 @@ function saveCardData(cardId, data) {
             console.error('Error:', error);
             // Gérer les erreurs ici
         });
+}
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Mettre à jour la classe 'active' en fonction de l'URL actuelle au chargement de la page
+    updateActiveNavLink(window.location.pathname);
+
+    // Ajout d'écouteurs d'événements pour les clics sur les liens
+    document.querySelectorAll('.nav-item a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            // Mettre à jour la classe 'active' lors du clic sur un lien
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            this.closest('.nav-item').classList.add('active');
+        });
+    });
+});
+
+function updateActiveNavLink(currentPath) {
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+    });
+
+    document.querySelectorAll('.nav-item a').forEach(link => {
+        // Ici, on compare le chemin de l'URL du lien avec le chemin actuel
+        if (link.getAttribute('href') === currentPath) {
+            link.closest('.nav-item').classList.add('active');
+        }
+    });
 }
 
