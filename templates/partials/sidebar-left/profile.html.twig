@@ -1,9 +1,11 @@
-<hr class="separator-profile">
-<div class="profile">
-    <img src="{{ asset('images/profile.jpg') }}" alt="Simon Braccini" class="profile-picture">
-    <div class="profile-info">
-        <p class="profile-info-user">Simon Braccini</p>
-        <p class="profile-info-user"><span>Étudiant S3</span></p>
+{% if app.session.get('user') %}
+    <hr class="separator-profile">
+    <div class="profile">
+        <img src="{{ asset('images/profile.jpg') }}" alt="{{ app.session.get('user').prenom }} {{ app.session.get('user').nom }}" class="profile-picture">
+        <div class="profile-info">
+            <p class="profile-info-user">{{ app.session.get('user').prenom }} {{ app.session.get('user').nom }}</p>
+            <p class="profile-info-user"><span>Étudiant {{ app.session.get('user').semestre }}</span></p>
+        </div>
     </div>
-</div>
-<hr class="separator-profile">
+    <hr class="separator-profile">
+{% endif %}

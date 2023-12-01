@@ -751,6 +751,190 @@
     display: none;
 }
 
+#register-form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px;
+    margin: 40px auto auto;
+    display: grid;
+    overflow-y: auto;
+    max-height: 350px;
+    grid-auto-rows: 345px;
+    height: 470px;
+
+}
+.register-button{
+    padding: 14px 48px;
+    text-align: center;
+    background-color: #24243A; /* Button background color */
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    text-decoration: none;
+    margin-top: 20px;
+}
+.register-button:hover{
+    background-color: #131321;
+}
+.dark-mode .register-button {
+    background-color: #F3F6FF;
+    color: #24243A;
+    border: none;
+}
+.dark-mode .register-button:hover{
+    background-color: #f3f6ffd9;
+    color: #24243A;
+}
+
+
+
+
+.login-button{
+    padding: 14px 48px;
+    text-align: center;
+    background-color: #f3f6ff; /* Button background color */
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #24243A;
+    text-decoration: none;
+}
+.login-button:hover {
+    background-color: #d4d6e2;
+    color: #24243A;
+}
+.dark-mode .login-button {
+    background-color: #24243A;
+    color: #f3f6ff;
+    border: 1px solid #F3F6FF;
+    border-radius:15px ;
+}
+.dark-mode .login-button:hover{
+    background-color: #131321;
+    color: #f3f6ff;
+}
+
+
+
+
+.dark-mode #register-form,.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group select {
+    background-color: #F3F6FF;
+}
+#register-form::-webkit-scrollbar {
+    display: none; /* Cache les barres de défilement sur Webkit/Safari/Chrome */
+}
+
+#register-form {
+    -ms-overflow-style: none;  /* Cache les barres de défilement pour IE et Edge */
+    scrollbar-width: none;  /* Cache les barres de défilement pour Firefox */
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin: 4px;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.password-field label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.password-field input[type="checkbox"] {
+    margin-left: 10px;
+}
+
+.error {
+    color: red;
+    font-size: 0.8rem;
+    margin-top: 5px;
+}
+.mdp{
+    font-size: 10px;
+    font-weight: 400;
+}
+
+.registerbtn {
+    background-color: #0068FF;
+    color: white;
+    border: none;
+    padding: 8px 50px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 20px;
+    display: block; /* Centrage du bouton */
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 18px;
+}
+
+.registerbtn:hover {
+    background-color: #0056b3;
+}
+.loginbtn {
+    background-color: #0068FF;
+    color: white;
+    border: none;
+    padding: 8px 50px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 20px;
+    display: block; /* Centrage du bouton */
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 18px;
+}
+
+.loginbtn:hover {
+    background-color: #0056b3;
+}
+#login-form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px;
+    margin: 40px auto auto;
+}
+.dark-mode #login-form{
+    background-color: #f3f6ff;
+}
+
+
 /* Responsiveness */
 /* Pour les appareils avec une largeur max de 768px (typiquement des tablettes et smartphones) */
 @media (max-width: 940px) {
@@ -768,6 +952,36 @@
         display: flex;
         flex-direction: column-reverse; /* Contenu en haut, sidebar en bas */
         align-items: center;
+    }
+    #register-form{
+        max-height: 240px;
+        max-width: none;
+    }
+
+    .form-group {
+        margin: 3px;
+    }
+
+    .form-group label {
+        margin-bottom: 3px;
+        font-size: 14px;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="password"],
+    .form-group select {
+        padding: 6px;
+        font-size: 14px;
+    }
+
+    .password-field input[type="checkbox"] {
+        margin-left: 5px;
+    }
+
+    button {
+        padding: 6px 40px;
+        font-size: 16px;
     }
 
     .sidebar {

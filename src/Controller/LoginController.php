@@ -7,16 +7,64 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-
-
-class AddController extends AbstractController
+class LoginController extends AbstractController
 {
-    #[Route('/add', name: 'app_add')]
-    public function index(Request $request): Response
-    {
+    #[Route('/login', name: 'login', methods: ['GET', 'POST'])]
+    public function login(Request $request, SessionInterface $session): Response {
         $session = $request->getSession();
         $username = $session->get('user')['prenom'] ?? null;
+        if ($session->get('user')) {
+            return $this->redirectToRoute('app_home');
+        }
+
+        $errors = [];
+
+        if ($request->isMethod('POST')) {
+            $email = $request->request->get('email');
+            $password = $request->request->get('password');
+
+            $path = $this->getParameter('kernel.project_dir') . '/var/data/users.json';
+            $users = file_exists($path) ? json_decode(file_get_contents($path), true) ?? [] : [];
+
+            $userFound = false;
+            foreach ($users as $user) {
+                if ($user['email'] === $email) {
+                    $userFound = true;
+                    if (password_verify($password, $user['password'])) {
+                        $session->set('user', ['nom' => $user['nom'], 'prenom' => $user['prenom'], 'email' => $user['email'], 'semestre' => $user['semestre'], 'groupe' => $user['groupe']]);
+                        $this->addFlash('success', 'Connexion réussie.');
+                        return $this->redirectToRoute('app_home');
+                    } else {
+                        $errors['password'] = 'Mot de passe invalide.';
+                    }
+                    break;
+                }
+            }
+
+            if (!$userFound) {
+                $errors['email'] = 'Mail introuvable.';
+            }
+        }
+        $group_items = [
+            ['value' => 'A', 'label' => 'A'],
+            ['value' => 'B', 'label' => 'B'],
+            ['value' => 'C', 'label' => 'C'],
+            ['value' => 'D', 'label' => 'D'],
+            ['value' => 'E', 'label' => 'E'],
+            ['value' => 'F', 'label' => 'F'],
+            ['value' => 'G', 'label' => 'G'],
+            ['value' => 'H', 'label' => 'H'],
+        ];
+        $rankItems = [
+            ['value' => 'S1', 'label' => 'S1'],
+            ['value' => 'S2', 'label' => 'S2'],
+            ['value' => 'S3', 'label' => 'S3'],
+            ['value' => 'S4', 'label' => 'S4'],
+            ['value' => 'S5', 'label' => 'S5'],
+            ['value' => 'S6', 'label' => 'S6'],
+        ];
         $cards = [
             [
                 'card_class' => 'yellow',
@@ -26,6 +74,8 @@ class AddController extends AbstractController
                 'card_details' => 'Deux rendus :',
                 'card_detail_items' => ['Rendu des esquisses', 'Rendu de la charte graphique'],
                 'card_email' => 'johndoe@univ-reims.fr',
+                'card_rank' => 'S1',
+                'card_group' => 'B',
             ],
             [
                 'card_class' => 'blue',
@@ -35,6 +85,8 @@ class AddController extends AbstractController
                 'card_details' => 'Trois rendus :',
                 'card_detail_items' => ['Rendu du code', 'Rendu du rapport', 'Rendu de la présentation'],
                 'card_email' => 'hihi@gmail.com',
+                'card_rank' => 'S2',
+                'card_group' => 'B',
             ],
             // Ajoutez d'autres cartes ici si nécessaire
             [
@@ -45,75 +97,54 @@ class AddController extends AbstractController
                 'card_details' => 'Trois rendus :',
                 'card_detail_items' => ['Rendu du code', 'Rendu du rapport', 'Rendu de la présentation'],
                 'card_email' => 'caca@hihi.com',
+                'card_rank' => 'S3',
+                'card_group' => 'C',
             ],
 
         ];
-
-        // Tableaux de couleurs pour les cartes
         $cardColors = [
             'yellow' => '#FADB39',
             'blue' => '#007BFF',
-            // Ajoutez d'autres couleurs pour d'autres classes ici
         ];
-
-        // Ajoutez d'autres tableaux de couleurs ici
         $cardBorderColors = [
             'yellow' => '#FADB39',
             'blue' => '#007BFF',
         ];
-
         $cardDateBackgroundColors = [
             'yellow' => '#',
             'blue' => '#...',
         ];
-
         $cardMatiereBorderColors = [
             'yellow' => '#EAC917',
             'blue' => '#1264DC',
         ];
-
         $cardDetailsColors = [
             'yellow' => '#...',
             'blue' => 'white',
         ];
-
         $cardSendColors = [
             'yellow' => '#...',
             'blue' => 'white',
         ];
-
         $cardEmailAddressColors = [
             'yellow' => '#...',
             'blue' => 'white',
         ];
         $cardTitleColors = [
-            'yellow' => '#', // exemple de couleur pour le titre
+            'yellow' => '#',
             'blue' => '#fff',
-            // Autres couleurs pour d'autres classes
         ];
         $cardDetailItemColors = [
-            'yellow' => '#', // exemple de couleur pour les éléments de détail
+            'yellow' => '#',
             'blue' => '#fff',
-            // Autres couleurs pour d'autres classes
         ];
-
-        // Données pour les dropdowns
         $dateItems = $this->getDateItemsFromCards($cards);
         $matiereItems = $this->getMatiereItemsFromCards($cards);
 
-        $class_items = [
-            ['value' => 'A', 'label' => 'A'],
-            ['value' => 'B', 'label' => 'B'],
-            ['value' => 'C', 'label' => 'C'],
-            ['value' => 'D', 'label' => 'D'],
-            ['value' => 'E', 'label' => 'E'],
-            ['value' => 'F', 'label' => 'F'],
-            ['value' => 'G', 'label' => 'G'],
-            ['value' => 'H', 'label' => 'H'],
-        ];
-        return $this->render('add/index.html.twig', [
-            'controller_name' => 'AddController',
-            'current_page' => 'add',
+        return $this->render('login/index.html.twig', [
+            'username' => $username,
+            'controller_name' => 'LoginController',
+            'current_page' => 'login',
             'cards' => $cards,
             'card_colors' => $cardColors,
             'card_border_colors' => $cardBorderColors,
@@ -124,11 +155,12 @@ class AddController extends AbstractController
             'card_email_address_colors' => $cardEmailAddressColors,
             'date_items' => $dateItems,
             'matiere_items' => $matiereItems,
-            'class_items' => $class_items,
+            'card_rank_items' => $rankItems,
+            'group_items' => $group_items,
             'card_title_colors' => $cardTitleColors,
             'card_detail_item_colors' => $cardDetailItemColors,
-            'username' => $username,
             'date' => '28 Novembre 2023',
+            'errors' => $errors,
         ]);
     }
 
@@ -158,5 +190,6 @@ class AddController extends AbstractController
             return ['value' => strtolower($matiere), 'label' => $matiere];
         }, $matieres);
     }
+
 
 }

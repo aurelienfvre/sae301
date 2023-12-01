@@ -39,6 +39,7 @@
 </div>
 
 {# Élément de navigation 'Paramètres' #}
+{% if app.session.get('user') %}
 <div class="nav-item {{ (current_page == 'settings') ? 'active' : '' }}" id="settings">
     <a class="nav-btn" href="{{ path('app_settings') }}">
     <i class="icon-settings">
@@ -57,3 +58,12 @@
 </a>
     {# faire des controller pour chaque page exemple : settingscontroller #}
 </div>
+{% else %}
+<div class="nav-item" id="settings" style="display:none;">
+    <a class="nav-btn" href="{{ path('app_settings') }}">
+        <!-- Icône et texte pour 'Paramètres' -->
+    </a>
+</div>
+{% endif %}
+
+

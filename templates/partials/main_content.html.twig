@@ -1,10 +1,9 @@
 <div class="main-content">
     <div class="main-content__item">
         {% include 'partials/main-content/header.html.twig' with {'date': date, 'username': username} %}
+        <h3 id="title_dates" class="title-filter">Liste des prochaines dates de rendu</h3>
 
-        <h3 class="title-filter">Liste des prochaines dates de rendu</h3>
-
-        <div class="dropdown-container">
+        <div id="dropdown_display" class="dropdown-container">
             {% include 'partials/main-content/dropdown.html.twig' with {
                 'dropdown_id': 'date-dropdown',
                 'dropdown_name': 'Dates',
@@ -40,7 +39,7 @@
             <!-- Les tags des filtres sélectionnés seront ajoutés ici dynamiquement -->
         </div>
 
-        <div class="card-container">
+        <div id="card_display" class="card-container">
             {% for card in cards %}
                 {% set cardColor = card_colors[card.card_class] %}
                 {% set cardBorderColor = card_border_colors[card.card_class] %}
@@ -66,7 +65,5 @@
                 } %}
             {% endfor %}
         </div>
-
-
     </div>
 </div>
