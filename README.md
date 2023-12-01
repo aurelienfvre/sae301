@@ -6,3 +6,8 @@
 ### puis il faut faire chmod 775 sae301/var/data
 ### puis chown www-data:www-data sae301/var/data
 ### et service apache2 restart
+#  pour la Modification du profil et l'ajout d'une photo
+### dans public il faut créer un dossier uploads puis dedans un dossier photos si cela c'est pas déjà fait
+### puis il faut faire chmod 775 sae301/public/uploads/photos
+### puis chown -R www-data:www-data sae301/public/uploads/photos
+### et service apache2 restart
