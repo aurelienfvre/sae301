@@ -7,7 +7,7 @@
         <div id="settings-form">
             <form action="{{ path('settings') }}" method="post" enctype="multipart/form-data">
                 <div class="form-row">
-                    <div class="form-group">
+                    <div class="form-group-settings">
                         <label for="prenom">Prénom :</label>
                         <input id="prenom" type="text" name="prenom" required value="{{ userData.prenom ?? '' }}" />
                         {% if errors['prenom'] is defined %}
@@ -15,7 +15,7 @@
                         {% endif %}
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group-settings">
                         <label for="nom">Nom :</label>
                         <input id="nom" type="text" name="nom" required value="{{ userData.nom ?? '' }}" />
                         {% if errors['nom'] is defined %}
@@ -24,7 +24,7 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group-settings">
                     <label for="email">Email :</label>
                     <div class="email-input-group">
                         <input id="email-part1" type="text" name="emailPart1" required value="{{ userData.email|split('@')[0]|split('.')[0] ?? '' }}" />
@@ -38,7 +38,7 @@
                 </div>
 
                 <!-- Ajout des champs pour mot de passe, semestre et groupe -->
-                <div class="form-group">
+                <div class="form-group-settings">
                     <label for="password">Mot de passe :</label>
                     <input id="password" type="password" name="password" />
                     <label>
@@ -46,7 +46,7 @@
                     </label>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group-settings">
                     <label for="semestre">Semestre :</label>
                     <select id="semestre" name="semestre">
                         {% for item in card_rank_items %}
@@ -55,7 +55,7 @@
                     </select>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group-settings">
                     <label for="groupe">Groupe :</label>
                     <select id="groupe" name="groupe">
                         {% for item in group_items %}
@@ -64,7 +64,7 @@
                     </select>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group-settings">
                     <label for="photo">Photo de profil :</label>
                     <div class="photo-preview" id="photo-preview"></div>
                     <input id="photo" type="file" name="photo" style="display: none;" onchange="previewImage(event)" />

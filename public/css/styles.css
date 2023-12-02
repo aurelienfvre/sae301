@@ -881,14 +881,14 @@ label{
     justify-content: space-between;
 
 }
-
 .form-group {
     display: flex;
     flex-direction: column;
     flex: 1;
-margin: 1px;
+    margin: 4px;
 
 }
+
 
 .form-group label {
     margin-bottom: 5px;
@@ -899,6 +899,30 @@ margin: 1px;
 .form-group input[type="email"],
 .form-group input[type="password"],
 .form-group select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.form-group-settings {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin: 1px;
+
+}
+
+
+.form-group-settings label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group-settings input[type="text"],
+.form-group-settings input[type="email"],
+.form-group-settings input[type="password"],
+.form-group-settings select {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 10px;
