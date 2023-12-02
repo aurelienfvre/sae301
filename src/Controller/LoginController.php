@@ -22,7 +22,9 @@ class LoginController extends AbstractController
         $errors = [];
 
         if ($request->isMethod('POST')) {
-            $email = $request->request->get('email');
+            $emailPart1 = $request->request->get('emailPart1');
+            $emailPart2 = $request->request->get('emailPart2');
+            $email = $emailPart1 . '.' . $emailPart2 . '@etudiant.univ-reims.fr';
             $password = $request->request->get('password');
 
             $path = $this->getParameter('kernel.project_dir') . '/var/data/users.json';

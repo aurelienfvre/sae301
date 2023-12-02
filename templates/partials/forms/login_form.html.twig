@@ -8,8 +8,13 @@
         <div id="login-form">
             <form action="{{ path('login') }}" method="post">
                 <div class="form-group">
-                    <label for="register-email">Email :</label>
-                    <input id="register-email" type="text" name="email" required pattern="[a-z]+\[a-z]+@etudiant\.univ-reims\.fr" value="{{ prenom|default('') }}{{ nom|default('') }}@etudiant.univ-reims.fr" />
+                    <label>Email :</label>
+                    <div class="email-input-group">
+                        <input type="text" name="emailPart1" required placeholder="prenom" pattern="[a-z]+" />
+                        <span class="email-separator">.</span>
+                        <input type="text" name="emailPart2" required placeholder="nom" pattern="[a-z]+" />
+                        <span class="email-domain">@etudiant.univ-reims.fr</span>
+                    </div>
                     {% if errors['email'] is defined %}
                         <div class="error">{{ errors.email }}</div>
                     {% endif %}
@@ -19,8 +24,7 @@
                     <label for="login-password">Mot de passe :</label>
                     <input id="login-password" type="password" name="password" required>
                     <label>
-                        <input type="checkbox" onchange="document.getElementById('login-password').type = this.checked ? 'text' : 'password'">
-                    </label>
+                        <input type="checkbox" onchange="document.getElementById('password').type = this.checked ? 'text' : 'password'"> Afficher le mot de passe  </label>
                     {% if errors['password'] is defined %}
                         <div class="error">{{ errors.password }}</div>
                     {% endif %}

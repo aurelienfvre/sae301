@@ -125,8 +125,8 @@
 }
 
 .profile-info-user span{
-    font-weight: regular;
-    font-size: 16px;
+    font-weight: 400;
+    font-size: 14px;
     color: #A2A9C8;
 }
 
@@ -703,6 +703,9 @@
 .dark-mode .reminder {
     color: #A2A9C8;
 }
+.main-header .profile#mobile-profile__settings {
+    display: none; /* Masquer le profil en mode bureau */
+}
 
 .reminder-card.blue {
     background-color: #007BFF;
@@ -755,7 +758,7 @@
     background-color: white;
     padding: 20px;
     border-radius: 8px;
-    max-width: 500px;
+    max-width: fit-content;
     margin: 40px auto auto;
     display: grid;
     overflow-y: auto;
@@ -792,7 +795,30 @@
 }
 
 
+.photo-preview {
+    display: none; /* Cache l'élément tant qu'aucune image n'est sélectionnée */
+    margin-bottom: 10px;
+}
 
+
+.btnpic {
+    /* Style du bouton, à personnaliser selon vos préférences */
+    background-color: #A2A9C8;
+    color: #f3f6ff;
+
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+label{
+    font-size: 14px;
+}
+.email-domain{
+    font-size: 14px;
+}
+.btnpic:hover {
+    background-color: #afb5d9;
+}
 
 .login-button{
     padding: 14px 48px;
@@ -825,6 +851,7 @@
 
 
 
+
 .dark-mode #register-form,.form-group input[type="text"],
 .form-group input[type="email"],
 .form-group input[type="password"],
@@ -840,6 +867,15 @@
     scrollbar-width: none;  /* Cache les barres de défilement pour Firefox */
 }
 
+#settings-form::-webkit-scrollbar {
+    display: none; /* Cache les barres de défilement sur Webkit/Safari/Chrome */
+}
+
+#settings-form {
+    -ms-overflow-style: none;  /* Cache les barres de défilement pour IE et Edge */
+    scrollbar-width: none;  /* Cache les barres de défilement pour Firefox */
+}
+
 .form-row {
     display: flex;
     justify-content: space-between;
@@ -850,7 +886,8 @@
     display: flex;
     flex-direction: column;
     flex: 1;
-    margin: 4px;
+margin: 1px;
+
 }
 
 .form-group label {
@@ -906,6 +943,7 @@
 .registerbtn:hover {
     background-color: #0056b3;
 }
+
 .loginbtn {
     background-color: #0068FF;
     color: white;
@@ -927,10 +965,43 @@
     background-color: white;
     padding: 20px;
     border-radius: 8px;
-    max-width: 500px;
+    max-width: fit-content;
     margin: 40px auto auto;
 }
 .dark-mode #login-form{
+    background-color: #f3f6ff;
+}
+
+.settingsbtn {
+    background-color: #0068FF;
+    color: white;
+    border: none;
+    padding: 8px 50px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 20px;
+    display: block; /* Centrage du bouton */
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 18px;
+}
+
+.settingsbtn:hover {
+    background-color: #0056b3;
+}
+#settings-form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: fit-content;
+    margin: 10px auto auto;
+    display: grid;
+    overflow-y: auto;
+    max-height: 405px;
+    grid-auto-rows: 390px;
+    height: 470px;
+}
+.dark-mode #settings-form{
     background-color: #f3f6ff;
 }
 
@@ -941,6 +1012,18 @@
     /* Masquer la sidebar-right */
     .sidebar-right {
         display: none;
+    }
+    .main-header .profile#mobile-profile {
+        display: block; /* Afficher le profil en mode bureau */
+        position: absolute; /* Positionnement absolu */
+        top: 80px; /* Distance du haut */
+        right: 60px; /* Distance de droite */
+    }
+    .main-header .profile#mobile-profile__settings {
+        display: block; /* Afficher le profil en mode bureau */
+        position: absolute; /* Positionnement absolu */
+        top: 80px; /* Distance du haut */
+        right: 60px; /* Distance de droite */
     }
 
     /* Transformer la sidebar en barre de navigation au bas de l'écran */
@@ -955,6 +1038,11 @@
     }
     #register-form{
         max-height: 240px;
+        max-width: none;
+    }
+    #settings-form{
+        max-height: 481px;
+        grid-auto-rows: 618px;
         max-width: none;
     }
 
@@ -1004,6 +1092,11 @@
         flex-direction: row; /* Alignement horizontal des nav-items */
         justify-content: space-around;
     }
+    .profile-picture{
+        width: 80px;
+        height: 80px;
+        border: 1px solid #A2A9C8;
+    }
 
     .nav-item {
         /* Ajustez le padding, la marge et d'autres styles pour les petits écrans */
@@ -1024,6 +1117,7 @@
         margin: 0; /* Enlever les marges */
         width: 100%; /* Prendre toute la largeur */
         height: 31rem;
+        overflow-x: hidden;
     }
 
     .logo svg{
@@ -1042,11 +1136,10 @@
         display: none;
     }
     .main-header {
-        flex-direction: column; /* Change la direction de flex pour empiler verticalement */
-        align-items: flex-start; /* Aligner les éléments à gauche */
-        width: 60%; /* Assurez-vous que le main-header occupe toute la largeur */
-        padding: 20px; /* Ajoutez du padding pour ne pas coller au bord */
-
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%; /* ajustez selon vos besoins */
+        padding: 20px;
     }
 
     .main-header h1{
@@ -1116,5 +1209,12 @@
     }
     .dropdown{
         width: fit-content;
+    }
+}
+@media (max-width: 460px) {
+    #settings-form{
+        max-height: 481px;
+        grid-auto-rows: 646px;
+        max-width: none;
     }
 }

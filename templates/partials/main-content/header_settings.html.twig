@@ -1,0 +1,20 @@
+<header class="main-header">
+    <div class="titles-container">
+        <h2>{{ date }}</h2>
+        {% if userData %}
+            <h1>Hello, {{ userData.prenom }} 👋</h1>
+        {% else %}
+            <h1>Hello 👋</h1>
+        {% endif %}
+    </div>
+    {% if app.session.get('user') %}
+        <div class="profile" id="mobile-profile__settings">
+            <a href="{{ path('settings') }}">
+                <img src="{{ asset('uploads/photos/' ~ app.session.get('user').photo|default('images/profile.jpg')) }}" alt="{{ app.session.get('user').prenom }} {{ app.session.get('user').nom }}" class="profile-picture">
+            </a>
+        </div>
+    {% endif %}
+    <div class="search-bar">
+        <input type="text" placeholder="Recherche" id="search-input">
+    </div>
+</header>

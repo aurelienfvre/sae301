@@ -22,9 +22,11 @@ class RegisterController extends AbstractController
         if ($request->isMethod('POST')) {
             $nom = $request->request->get('nom');
             $prenom = $request->request->get('prenom');
+            $emailPart1 = $request->request->get('emailPart1');
+            $emailPart2 = $request->request->get('emailPart2');
+            $email = $emailPart1 . '.' . $emailPart2 . '@etudiant.univ-reims.fr';
             $semestre = $request->request->get('semestre', 'Non spécifié');
             $groupe = $request->request->get('groupe', 'Non spécifié');
-            $email = $request->request->get('email');
             $password = $request->request->get('password');
             $confirmPassword = $request->request->get('confirmPassword');
 
@@ -57,10 +59,12 @@ class RegisterController extends AbstractController
 
             if (empty($errors)) {
                 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-                if (!file_exists($path)) {
-                    file_put_contents($path, json_encode([]));
-                }
+                $path = $this->getParameter('kernel.project_dir') . '/var/data/users.json';
+                $users = file_exists($path) ? json_decode(file_get_contents($path), true) ?? [] : [];
+
+                $newUserId = uniqid('user_');
                 $users[] = [
+                    'id' => $newUserId,
                     'nom' => $nom,
                     'prenom' => $prenom,
                     'email' => $email,
@@ -69,7 +73,7 @@ class RegisterController extends AbstractController
                     'groupe' => $groupe
                 ];
                 file_put_contents($path, json_encode($users));
-                $session->set('user', ['nom' => $nom, 'prenom' => $prenom, 'email' => $email, 'semestre' => $semestre, 'groupe' => $groupe]);
+                $session->set('user', ['id' => $newUserId, 'nom' => $nom, 'prenom' => $prenom, 'email' => $email, 'semestre' => $semestre, 'groupe' => $groupe]);
                 $this->addFlash('success', 'Inscription réussie. Vous êtes maintenant connecté.');
                 return $this->redirectToRoute('app_home');
             }
@@ -206,6 +210,8 @@ class RegisterController extends AbstractController
             return ['value' => strtolower($date), 'label' => $date];
         }, $dates);
     }
+
+
 
     private function getMatiereItemsFromCards($cards): array
     {
