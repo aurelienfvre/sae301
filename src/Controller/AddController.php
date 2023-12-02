@@ -12,42 +12,66 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AddController extends AbstractController
 {
-    #[Route('/add', name: 'app_add')]
+    #[Route('/add', name: 'app_add', methods: ['GET', 'POST'])]
     public function index(Request $request): Response
     {
         $session = $request->getSession();
         $username = $session->get('user')['prenom'] ?? null;
-        $cards = [
-            [
-                'card_class' => 'yellow',
-                'card_id' => 1,
-                'card_date' => '29 Nov. 2023',
-                'card_title' => 'Culture artistique 🎨',
-                'card_details' => 'Deux rendus :',
-                'card_detail_items' => ['Rendu des esquisses', 'Rendu de la charte graphique'],
-                'card_email' => 'johndoe@univ-reims.fr',
-            ],
-            [
-                'card_class' => 'blue',
-                'card_id' => 2,
-                'card_date' => '30 Nov. 2023',
-                'card_title' => 'Développement Front 🖥️',
-                'card_details' => 'Trois rendus :',
-                'card_detail_items' => ['Rendu du code', 'Rendu du rapport', 'Rendu de la présentation'],
-                'card_email' => 'hihi@gmail.com',
-            ],
-            // Ajoutez d'autres cartes ici si nécessaire
-            [
-                'card_class' => 'blue',
-                'card_id' => 3,
-                'card_date' => '30 Nov. 2023',
-                'card_title' => 'Développement Back 🖥️',
-                'card_details' => 'Trois rendus :',
-                'card_detail_items' => ['Rendu du code', 'Rendu du rapport', 'Rendu de la présentation'],
-                'card_email' => 'caca@hihi.com',
-            ],
+        if ($request->isMethod('POST')) {
+            // Récupération des données du formulaire
+            $cardDate = $request->request->get('cardDate');
+            $semestre = $request->request->get('semestre');
+            $groupe = $request->request->get('groupe');
+            $cardTitle = $request->request->get('cardTitle');
+            $cardDetails = $request->request->get('cardDetails');
+            $cardDetailItemsInput = $request->request->get('cardDetailItems');
+            $cardDetailItems = explode(',', $cardDetailItemsInput);
+            $cardEmail = $request->request->get('cardEmail');
+
+            // Séparation des éléments par virgule
+
+            $path = $this->getParameter('kernel.project_dir') . '/var/data/cards.json';
+            $cards = file_exists($path) ? json_decode(file_get_contents($path), true) ?? [] : [];
+
+            $newCard = [
+                'card_class' => 'yellow', // ou autre selon la logique
+                'card_id' => count($cards) + 1,
+                'card_date' => $cardDate,
+                'card_title' => $cardTitle,
+                'card_details' => $cardDetails,
+                'card_detail_items' => array_map('trim', $cardDetailItems),
+                'card_email' => $cardEmail, // À définir, peut-être à partir d'un autre champ du formulaire
+                'card_rank' => $semestre,
+                'card_group' => $groupe,
+
+            ];
+            $cards[] = $newCard;
+
+            file_put_contents($path, json_encode($cards));
+
+            // Redirection vers la page d'accueil
+            return $this->redirectToRoute('app_home');
+        }
+        $group_items = [
+            ['value' => 'A', 'label' => 'A'],
+            ['value' => 'B', 'label' => 'B'],
+            ['value' => 'C', 'label' => 'C'],
+            ['value' => 'D', 'label' => 'D'],
+            ['value' => 'E', 'label' => 'E'],
+            ['value' => 'F', 'label' => 'F'],
+            ['value' => 'G', 'label' => 'G'],
+            ['value' => 'H', 'label' => 'H'],
 
         ];
+        $rankItems = [
+            ['value' => 'S1', 'label' => 'S1'],
+            ['value' => 'S2', 'label' => 'S2'],
+            ['value' => 'S3', 'label' => 'S3'],
+            ['value' => 'S4', 'label' => 'S4'],
+            ['value' => 'S5', 'label' => 'S5'],
+            ['value' => 'S6', 'label' => 'S6'],
+        ];
+
 
         // Tableaux de couleurs pour les cartes
         $cardColors = [
@@ -97,20 +121,24 @@ class AddController extends AbstractController
             // Autres couleurs pour d'autres classes
         ];
 
+        $cards = [
+            [
+                'card_class' => 'yellow',
+                'card_id' => 1,
+                'card_date' => '29 Nov. 2023',
+                'card_title' => 'Culture artistique 🎨',
+                'card_details' => 'Deux rendus :',
+                'card_detail_items' => ['Rendu des esquisses', 'Rendu de la charte graphique'],
+                'card_email' => 'johndoe@univ-reims.fr',
+                'card_rank' => 'S1',
+                'card_group' => 'B',
+            ]
+        ];
         // Données pour les dropdowns
         $dateItems = $this->getDateItemsFromCards($cards);
         $matiereItems = $this->getMatiereItemsFromCards($cards);
 
-        $class_items = [
-            ['value' => 'A', 'label' => 'A'],
-            ['value' => 'B', 'label' => 'B'],
-            ['value' => 'C', 'label' => 'C'],
-            ['value' => 'D', 'label' => 'D'],
-            ['value' => 'E', 'label' => 'E'],
-            ['value' => 'F', 'label' => 'F'],
-            ['value' => 'G', 'label' => 'G'],
-            ['value' => 'H', 'label' => 'H'],
-        ];
+
         return $this->render('add/index.html.twig', [
             'controller_name' => 'AddController',
             'current_page' => 'add',
@@ -124,7 +152,8 @@ class AddController extends AbstractController
             'card_email_address_colors' => $cardEmailAddressColors,
             'date_items' => $dateItems,
             'matiere_items' => $matiereItems,
-            'class_items' => $class_items,
+            'card_rank_items' => $rankItems,
+            'group_items' => $group_items,
             'card_title_colors' => $cardTitleColors,
             'card_detail_item_colors' => $cardDetailItemColors,
             'username' => $username,
@@ -158,5 +187,8 @@ class AddController extends AbstractController
             return ['value' => strtolower($matiere), 'label' => $matiere];
         }, $matieres);
     }
+
+
+
 
 }

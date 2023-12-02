@@ -507,3 +507,24 @@ function updateActiveNavLink(currentPath) {
     });
 }
 
+function formatDate(input) {
+    var date = new Date(input.value);
+    if (!isNaN(date.getTime())) {
+        // Format de la date pour l'affichage
+        var day = date.getDate();
+        var monthIndex = date.getMonth();
+        var year = date.getFullYear();
+        var monthNames = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "Jun.", "Jul.", "Aug.", "Sep.", "Oct.", "Nov.", "Dec."];
+
+        var formattedDate = day + ' ' + monthNames[monthIndex] + ' ' + year;
+        input.value = formattedDate;
+
+        // Mise à jour du champ de formulaire réel
+        var formattedDateForInput = year + '-' + ('0' + (monthIndex + 1)).slice(-2) + '-' + ('0' + day).slice(-2);
+        document.getElementById('date').value = formattedDateForInput;
+    } else {
+        // Gérer les entrées invalides
+        input.value = '';
+        document.getElementById('date').value = '';
+    }
+}

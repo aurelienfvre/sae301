@@ -37,43 +37,9 @@ class HomeController extends AbstractController
             ['value' => 'S5', 'label' => 'S5'],
             ['value' => 'S6', 'label' => 'S6'],
         ];
-        $cards = [
-            [
-                'card_class' => 'yellow',
-                'card_id' => 1,
-                'card_date' => '29 Nov. 2023',
-                'card_title' => 'Culture artistique 🎨',
-                'card_details' => 'Deux rendus :',
-                'card_detail_items' => ['Rendu des esquisses', 'Rendu de la charte graphique'],
-                'card_email' => 'johndoe@univ-reims.fr',
-                'card_rank' => 'S1',
-                'card_group' => 'B',
-            ],
-            [
-                'card_class' => 'blue',
-                'card_id' => 2,
-                'card_date' => '30 Nov. 2023',
-                'card_title' => 'Développement Front 🖥️',
-                'card_details' => 'Trois rendus :',
-                'card_detail_items' => ['Rendu du code', 'Rendu du rapport', 'Rendu de la présentation'],
-                'card_email' => 'hihi@gmail.com',
-                'card_rank' => 'S2',
-                'card_group' => 'B',
-            ],
-            // Ajoutez d'autres cartes ici si nécessaire
-            [
-            'card_class' => 'blue',
-            'card_id' => 3,
-            'card_date' => '30 Nov. 2023',
-            'card_title' => 'Développement Back 🖥️',
-            'card_details' => 'Trois rendus :',
-            'card_detail_items' => ['Rendu du code', 'Rendu du rapport', 'Rendu de la présentation'],
-            'card_email' => 'caca@hihi.com',
-                'card_rank' => 'S3',
-                'card_group' => 'C',
-            ],
-
-        ];
+        // Chemin vers le fichier cards.json
+        $path = $this->getParameter('kernel.project_dir') . '/var/data/cards.json';
+        $cards = file_exists($path) ? json_decode(file_get_contents($path), true) ?? [] : [];
 
         // Tableaux de couleurs pour les cartes
         $cardColors = [

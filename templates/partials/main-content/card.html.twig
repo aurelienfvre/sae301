@@ -30,10 +30,12 @@
             <p class="semestre">Semestre: {{ card.card_rank|default('Non spécifié') }}</p>
             <p class="groupe">Groupe: {{ card.card_group|default('Non spécifié') }}</p>
 
-            <p class="send" style="color: {{ card_send_color }}">À envoyer à l'adresse suivante :</p>
+            <p class="send" style="color: {{ card_send_color }}">À envoyer sur:</p>
             <p class="email-address editable" data-field="card_email" style="color: {{ card_email_address_color }}">
-                {{ card.card_email }}
+                {{ card.card_email | default('Moodle') }}
             </p>
+
+
         </div>
     </div>
     {% include 'partials/main-content/card_actions.html.twig' %}
