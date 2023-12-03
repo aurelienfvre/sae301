@@ -1,0 +1,69 @@
+<div class="main-content">
+    <div class="main-content__item">
+        {% include 'partials/main-content/header.html.twig' with {'date': date, 'username': username} %}
+        <h3 id="title_dates" class="title-filter">Liste des prochaines dates de rendu</h3>
+
+        <div id="dropdown_display" class="dropdown-container">
+            {% include 'partials/main-content/dropdown.html.twig' with {
+                'dropdown_id': 'date-dropdown',
+                'dropdown_name': 'Dates',
+                'dropdown_items': date_items
+            } %}
+
+            {% include 'partials/main-content/dropdown.html.twig' with {
+                'dropdown_id': 'semestre-dropdown',
+                'dropdown_name': 'Semestre',
+                'dropdown_items': card_rank_items
+            } %}
+
+            {% include 'partials/main-content/dropdown.html.twig' with {
+                'dropdown_id': 'group-dropdown',
+                'dropdown_name': 'Groupe',
+                'dropdown_items': group_items
+            } %}
+
+            {% include 'partials/main-content/dropdown.html.twig' with {
+                'dropdown_id': 'matieres-dropdown',
+                'dropdown_name': 'Matières',
+                'dropdown_items': matiere_items
+            } %}
+
+            <button id="clear-filters" class="clear-filters">
+                <span class="clear-icon"></span>
+                Effacer les filtres
+            </button>
+            <!-- Ajouter d'autres dropdowns si nécessaire -->
+        </div>
+
+        <div class="selected-filters" id="selected-filters">
+            <!-- Les tags des filtres sélectionnés seront ajoutés ici dynamiquement -->
+        </div>
+
+        <div id="card_display" class="card-container">
+            {% for card in cards %}
+                {% set cardColor = card_colors[card.card_class] %}
+                {% set cardBorderColor = card_border_colors[card.card_class] %}
+                {% set cardDateBackgroundColor = card_date_background_colors[card.card_class] %}
+                {% set cardMatiereBorderColor = card_matiere_border_colors[card.card_class] %}
+                {% set cardDetailsColor = card_details_colors[card.card_class] %}
+                {% set cardSendColor = card_send_colors[card.card_class] %}
+                {% set cardEmailAddressColor = card_email_address_colors[card.card_class] %}
+                {% set cardTitleColor = card_title_colors[card.card_class] %}
+                {% set cardDetailItemColor = card_detail_item_colors[card.card_class] %}
+
+                {% include 'partials/main-content/card.html.twig' with {
+                    'card': card,
+                    'card_color': cardColor,
+                    'card_border_color': cardBorderColor,
+                    'card_date_background_color': cardDateBackgroundColor,
+                    'card_matiere_border_color': cardMatiereBorderColor,
+                    'card_details_color': cardDetailsColor,
+                    'card_send_color': cardSendColor,
+                    'card_email_address_color': cardEmailAddressColor,
+                    'card_title_color': cardTitleColor,
+                    'card_detail_item_color': cardDetailItemColor
+                } %}
+            {% endfor %}
+        </div>
+    </div>
+</div>

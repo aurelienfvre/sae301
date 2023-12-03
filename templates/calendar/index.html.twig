@@ -1,0 +1,15 @@
+{# templates/home/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Edutask - Calendrier{% endblock %}
+
+{% block body %}
+    <div class="layout">
+        {% include 'partials/sidebar.html.twig' %}
+        {% include 'partials/main-content__calendar.html.twig' %}
+        {% include 'partials/sidebar_right.html.twig' %}
+
+    </div>
+{% endblock %}
+
+

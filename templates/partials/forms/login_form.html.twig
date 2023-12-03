@@ -1,0 +1,39 @@
+{# partials/forms/login_form.html.twig #}
+<div class="main-content">
+    <div class="main-content__item">
+        {% include 'partials/main-content/header.html.twig' with {'date': date, 'username': username} %}
+
+        <h3 class="title-filter">Formulaire de connexion</h3>
+
+        <div id="login-form">
+            <form action="{{ path('login') }}" method="post">
+                <div class="form-group">
+                    <label>Email :</label>
+                    <div class="email-input-group">
+                        <input type="text" name="emailPart1" required placeholder="prenom" pattern="[a-z]+" />
+                        <span class="email-separator">.</span>
+                        <input type="text" name="emailPart2" required placeholder="nom" pattern="[a-z]+" />
+                        <span class="email-domain">@etudiant.univ-reims.fr</span>
+                    </div>
+                    {% if errors['email'] is defined %}
+                        <div class="error">{{ errors.email }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group password-field">
+                    <label for="login-password">Mot de passe :</label>
+                    <input id="login-password" type="password" name="password" required>
+                    <label>
+                        <input type="checkbox" onchange="document.getElementById('login-password').type = this.checked ? 'text' : 'password'"> Afficher le mot de passe
+                    </label>
+                    {% if errors['password'] is defined %}
+                        <div class="error">{{ errors.password }}</div>
+                    {% endif %}
+                </div>
+
+
+                <button class="loginbtn" type="submit">Se connecter</button>
+            </form>
+        </div>
+    </div>
+</div>

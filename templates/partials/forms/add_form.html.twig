@@ -1,0 +1,64 @@
+<div class="main-content">
+    <div class="main-content__item">
+        {% include 'partials/main-content/header.html.twig' with {'date': date, 'username': username} %}
+
+        <h3 class="title-filter">Ajouter une nouvelle carte</h3>
+        <div id="add-card-form">
+            <form action="{{ path('app_add') }}" method="post">
+                <!-- Champ pour le titre de la carte -->
+                <div class="form-group-add">
+                    <label for="card-title">Titre de la Carte :</label>
+                    <input type="text" id="card-title" name="cardTitle" placeholder="Nom de la matière" required>
+                </div>
+
+                <!-- Champ pour les détails de la carte -->
+                <div class="form-group-add">
+                    <label for="card-details">Détails de la Carte :</label>
+                    <input type="text" id="card-details" name="cardDetails" placeholder="Détails du rendu">
+                </div>
+
+                <div class="form-group-add">
+                    <label for="card-detail-items">Liste des rendus :</label>
+                    <input type="text" id="card-detail-items" name="cardDetailItems" placeholder="Rendu du code, Rendu du rapport, Rendu de la présentation">
+                </div>
+
+                <!-- Champ pour l'email -->
+                <div class="form-group-add">
+                    <label for="card-email">Où le rendre :</label>
+                    <input type="text" id="card-email" name="cardEmail" placeholder="Moodle">
+                </div>
+
+                <!-- Sélection du semestre -->
+                <div class="form-group-add">
+                    <label for="semestre">Semestre :</label>
+                    <select id="semestre" name="semestre">
+                        {% for item in card_rank_items %}
+                            <option value="{{ item.value }}">{{ item.label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Sélection du groupe -->
+                <div class="form-group-add">
+                    <label for="groupe">Groupe :</label>
+                    <select id="groupe" name="groupe">
+                        {% for item in group_items %}
+                            <option value="{{ item.value }}">{{ item.label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Champ pour la date -->
+                <div class="form-group-add">
+                    <label for="date">Date :</label>
+                    <input type="date" id="date" name="cardDate" required>
+                </div>
+
+
+
+
+                <button class="add-card-btn" type="submit">Ajouter</button>
+            </form>
+        </div>
+    </div>
+</div>

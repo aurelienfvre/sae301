@@ -1,0 +1,34 @@
+{# templates/base.html.twig #}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+
+    {# Liens CSS spécifiques à votre projet #}
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/styles.css') }}"> {# Lien vers votre fichier CSS personnalisé #}
+    {% endblock %}
+
+    {# Intégration de la bibliothèque Moment.js depuis un CDN #}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+
+</head>
+
+<body>
+
+        {% block body %}
+            {# Le contenu spécifique à chaque page sera rendu ici #}
+        {% endblock %}
+
+
+{# Scripts JS spécifiques à votre projet #}
+{% block javascripts %}
+    <script src='https://fullcalendar.io/releases/v5.0.0/main.js'></script>
+    <script src="{{ asset('js/script.js') }}"></script>
+    {# Lien vers votre fichier JS personnalisé #}
+{% endblock %}
+</body>
+</html>

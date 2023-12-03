@@ -1,0 +1,42 @@
+<div class="card" id="card-{{ card.card_id }}"
+     style="background-color: {{ card_color }}; border-color: {{ card_border_color }}"
+     data-date="{{ card.card_date | lower }}"
+     data-semestre="{{ card.card_rank|lower|default('non spécifié') }}"
+     data-groupe="{{ card.card_group|lower|default('non spécifié') }}"
+     data-matiere="{{ card.card_title | lower }}">
+    <div class="checkbox-container">
+        <input type="checkbox" class="card-checkbox" id="checkbox{{ card.card_id }}" data-card-id="{{ card.card_id }}">
+        <label for="checkbox{{ card.card_id }}"></label>
+    </div>
+    <div class="card-date editable" data-field="card_date" style="background-color: {{ card_date_background_color }}">
+        {{ card.card_date }}
+    </div>
+    <div class="card-content">
+        <div class="card-title editable" style="color: {{ card_title_color }}" data-field="card_title">
+            {{ card.card_title }}
+        </div>
+        <hr class="matiere" style="border-color: {{ card_matiere_border_color }}">
+        <div class="additional-content">
+            <div class="details editable" data-field="card_details" style="color: {{ card_details_color }}">
+                {{ card.card_details }}
+            </div>
+
+
+            <ul class="card-details" style="color: {{ card_detail_item_color }}">
+                {% for detail in card.card_detail_items %}
+                    <li class="editable" data-field="card_detail_items">{{ detail }}</li>
+                {% endfor %}
+            </ul>
+            <p class="semestre">Semestre: {{ card.card_rank|default('Non spécifié') }}</p>
+            <p class="groupe">Groupe: {{ card.card_group|default('Non spécifié') }}</p>
+
+            <p class="send" style="color: {{ card_send_color }}">À envoyer sur:</p>
+            <p class="email-address editable" data-field="card_email" style="color: {{ card_email_address_color }}">
+                {{ card.card_email | default('Moodle') }}
+            </p>
+
+
+        </div>
+    </div>
+    {% include 'partials/main-content/card_actions.html.twig' %}
+</div>
