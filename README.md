@@ -1,4 +1,5 @@
 #### sae301
+#### dans le url mettez /home
 
 #  pour la connexion et inscription
 #### il faut créer un dossier data dans var
