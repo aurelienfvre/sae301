@@ -18,3 +18,67 @@
 #### puis chown www-data:www-data le_chemin_du_clone/sae301/var/data/cards.json
 #### puis chmod 755 le_chemin_du_clone/sae301/var/data si c'est pas déjà fait
 #### et service apache2 restart
+
+
+# MCD (Modèle Conceptuel de Données)
+
+1. **Utilisateur**
+   - Prénom
+   - Nom
+   - Email
+   - Mot de passe
+   - Semestre
+   - Groupe
+   - Photo de profil (optionnel)
+
+2. **Carte**
+   - Titre de la carte (Nom de la matière)
+   - Détails de la carte
+   - Liste des rendus
+   - Lieu de rendu (par exemple, Moodle)
+   - Date
+   - Semestre
+   - Groupe
+   - Statut (pour la to-do list)
+
+3. **Événement**
+   - Date
+   - Titre
+   - Détails (liés aux cartes)
+
+### Relations
+
+- **Utilisateur <-> Carte** : Un utilisateur peut ajouter/modifier des cartes (relation optionnelle).
+- **Utilisateur <-> Événement** : Les événements dans le calendrier sont liés aux cartes ajoutées par les utilisateurs (relation optionnelle).
+
+# MLD (Modèle Logique de Données)
+
+1. **Utilisateur**
+   - **ID** INT (Clé Primaire)
+   - Prénom VARCHAR
+   - Nom VARCHAR
+   - Email VARCHAR (Unique)
+   - MotDePasse VARCHAR
+   - Semestre VARCHAR
+   - Groupe VARCHAR
+   - PhotoDeProfil VARCHAR (optionnel)
+
+2. **Carte**
+   - **ID** INT (Clé Primaire)
+   - Titre VARCHAR
+   - Details VARCHAR
+   - ListeRendus VARCHAR
+   - LieuRendu VARCHAR
+   - Date DATE
+   - Semestre VARCHAR
+   - Groupe VARCHAR
+   - Statut BOOLEAN
+   - **UtilisateurID** INT (Clé Étrangère, optionnel)
+
+3. **Evenement**
+   - **ID** INT (Clé Primaire)
+   - Date DATE
+   - Titre VARCHAR
+   - Details VARCHAR
+   - **UtilisateurID** INT (Clé Étrangère, optionnel)
+
