@@ -24,11 +24,13 @@
                     <label for="login-password">Mot de passe :</label>
                     <input id="login-password" type="password" name="password" required>
                     <label>
-                        <input type="checkbox" onchange="document.getElementById('password').type = this.checked ? 'text' : 'password'"> Afficher le mot de passe  </label>
+                        <input type="checkbox" onchange="document.getElementById('login-password').type = this.checked ? 'text' : 'password'"> Afficher le mot de passe
+                    </label>
                     {% if errors['password'] is defined %}
                         <div class="error">{{ errors.password }}</div>
                     {% endif %}
                 </div>
+
 
                 <button class="loginbtn" type="submit">Se connecter</button>
             </form>

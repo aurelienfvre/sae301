@@ -13,8 +13,9 @@
 
     {# Intégration de la bibliothèque Moment.js depuis un CDN #}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+
 </head>
-<body>
 
 <body>
 
@@ -25,6 +26,7 @@
 
 {# Scripts JS spécifiques à votre projet #}
 {% block javascripts %}
+    <script src='https://fullcalendar.io/releases/v5.0.0/main.js'></script>
     <script src="{{ asset('js/script.js') }}"></script>
     {# Lien vers votre fichier JS personnalisé #}
 {% endblock %}

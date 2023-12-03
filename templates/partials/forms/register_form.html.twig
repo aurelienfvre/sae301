@@ -36,7 +36,7 @@
                         <label for="register-password">Mot de passe :</label>
                         <input id="register-password" type="password" name="password" required />
                         <label>
-                            <input type="checkbox" onchange="document.getElementById('password').type = this.checked ? 'text' : 'password'"> Afficher le mot de passe
+                            <input type="checkbox" onchange="document.getElementById('register-password').type = this.checked ? 'text' : 'password'"> Afficher le mot de passe
                         </label>
                         {% if errors['password'] is defined %}
                             <div class="error">{{ errors.password }}</div>
@@ -56,7 +56,7 @@
                         <label for="register-confirm-password">Confirmer le mot de passe :</label>
                         <input id="register-confirm-password" type="password" name="confirmPassword" required />
                         <label>
-                            <input type="checkbox" onchange="document.getElementById('password').type = this.checked ? 'text' : 'password'"> Afficher le mot de passe  </label>
+                            <input type="checkbox" onchange="document.getElementById('register-confirm-password').type = this.checked ? 'text' : 'password'"> Afficher le mot de passe
                         </label>
                         {% if errors['confirmPassword'] is defined %}
                             <div class="error">{{ errors.confirmPassword }}</div>
